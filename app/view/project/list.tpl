@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <title>Chaos项目管理</title>
+  </head>
+  <body>
+    <div>
+    {{projects[0].title}}
+    </div>
+  </body>
+</html>
