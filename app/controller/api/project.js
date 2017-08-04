@@ -3,15 +3,15 @@
 module.exports = app => {
   class ProjectController extends app.Controller {
     * create() {
-      const rule = {
-        title: { type: 'string', required: true },
-        charge: { type: 'string', required: true },
-        developer: { type: 'array' },
-        deadLine: { type: 'number', required: true },
-      };
+      // const rule = {
+      //   title: { type: 'string', required: true },
+      //   charge: { type: 'string', required: true },
+      //   developer: { type: 'array' },
+      //   endDate: { type: 'number', required: true },
+      // };
       const userId = this.ctx.request.user.userId;
       this.ctx.request.body.author = userId;
-      this.ctx.validate(rule);
+      // this.ctx.validate(rule);
       yield this.app.model.project.create(this.ctx.request.body);
       this.ctx.status = 201;
     }
@@ -32,6 +32,14 @@ module.exports = app => {
     }
     * index() {
       this.ctx.body = yield this.app.model.project.find({});
+    }
+    * getByUserId() {
+      const userId = this.ctx.request.user.userId;
+      this.ctx.body = yield this.app.model.project.find({ author: userId });
+    }
+    * getByState() {
+      const state = this.ctx.request.body.state;
+      this.ctx.body = yield this.app.model.project.find({ state: state });
     }
   }
   return ProjectController;

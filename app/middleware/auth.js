@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 // 是否已经登录
 const isLogin = function* (next) {
   const token = this.request.header.authorization;
+  console.log(token);
   if (!token) {
     this.response.status = 401;
     this.response.body = 'token不能为空';
@@ -16,7 +17,7 @@ const isLogin = function* (next) {
     // 有效期小于一小时的重新办法token
     const isOver = exp - now < 60 * 60;
     if (isOver) {
-      const token = jwt.sign({ userId: info.userId }, app.config.jwtSecret, { expiresIn: '7d' });
+      const token = jwt.sign({ userId: info.userId }, this.app.config.jwtSecret, { expiresIn: '7d' });
       this.set('authorization', 'Bearer ' + token);
     }
   } catch (err) {

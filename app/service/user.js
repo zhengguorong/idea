@@ -48,6 +48,10 @@ module.exports = app => {
       }
       throw new Error('用户不存在');
     }
+    * getUsers() {
+      const users = yield app.model.user.find({}, '-_id -password -__v');
+      return users;
+    }
   }
   return UserService;
 };

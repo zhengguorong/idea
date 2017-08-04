@@ -4,6 +4,6 @@
 </template>
 <style>
 body {
-  margin: 0 auto
+  margin: 0 auto;
 }
 </style>

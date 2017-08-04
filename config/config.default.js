@@ -31,6 +31,10 @@ module.exports = appInfo => {
       enable: false,
     },
   };
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+  };
   config.middleware = [ 'errorHandler' ]; // 使用koa的中间件
   config.auth = {
     test: 'tst',
