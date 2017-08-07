@@ -8,23 +8,31 @@ export default [{
   name: 'register',
   component: require('@/views/user/register')
 }, {
+  path: '/index',
+  name: 'index',
+  component: require('@/views/project/index')
+}, {
   path: '/',
-  name: 'projectList',
-  component: require('@/views/project/list')
+  name: 'index',
+  component: require('@/views/project/index')
 }, {
   path: '/process',
-  name: 'processProject',
-  component: require('@/views/project/list')
+  name: 'process',
+  component: require('@/views/project/active')
 }, {
   path: '/finish',
-  name: 'finishProject',
-  component: require('@/views/project/list')
+  name: 'finish',
+  component: require('@/views/project/finish')
 }, {
   path: '/my',
-  name: 'myProject',
-  component: require('@/views/project/list')
+  name: 'my',
+  component: require('@/views/project/my')
 }, {
   path: '/createProject',
   name: 'createProject',
   component: require('@/views/project/create')
+}, {
+  path: '/updateProject/:id',
+  name: 'updateProject',
+  component: require('@/views/project/update')
 }]

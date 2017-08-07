@@ -10,12 +10,14 @@ export default {
       return api.register(userInfo).then(res => {
         window.localStorage.setItem('token', res.token)
         window.localStorage.setItem('nickName', userInfo.nickName)
+        window.localStorage.setItem('userId', userInfo.userId)
       })
     },
     login ({ commit }, userInfo) {
       return api.login(userInfo).then(res => {
         window.localStorage.setItem('token', res.token)
         window.localStorage.setItem('nickName', res.nickName)
+        window.localStorage.setItem('userId', userInfo.userId)
       })
     },
     getUsers ({commit}) {

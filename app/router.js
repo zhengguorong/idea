@@ -20,7 +20,8 @@ module.exports = app => {
   // 百度相关接口
   app.get('/api/baidu/getAccessToken', 'api.baidu.getAccessToken');
 
-  app.resources('project', '/api/project', auth.isLogin, 'api.project');
-  app.get('/api/project/getByUserId', auth.isLogin, 'api.project.getByUserId');
+  app.resources('/api/project', auth.isLogin, 'api.project');
+  app.get('/api/project/getByUser', auth.isLogin, 'api.project.getByUser');
   app.get('/api/project/getByState', auth.isLogin, 'api.project.getByState');
+  app.get('/api/project/getExcludeState', auth.isLogin, 'api.project.getExcludeState');
 };

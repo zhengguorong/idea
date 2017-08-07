@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 // 是否已经登录
 const isLogin = function* (next) {
   const token = this.request.header.authorization;
-  console.log(token);
   if (!token) {
     this.response.status = 401;
     this.response.body = 'token不能为空';

@@ -3,7 +3,11 @@ import api from '@/api/project'
 export default {
   namespaced: true,
   state: {
-    activeList: []
+    list: [],
+    myList: [],
+    finishList: [],
+    activeList: [],
+    detail: {}
   },
   actions: {
     create ({commit}, data) {
@@ -11,42 +15,70 @@ export default {
       data.endDate = data.endDate.getTime()
       api.create(data)
     },
-    getActiveList ({commit}) {
+    getList ({commit}) {
       return api.getList().then(res => {
-        commit('setActiveList', res)
-      })
-    },
-    getFinishList ({commit}) {
-      return api.getList().then(res => {
-        commit('setFinishList', res)
+        commit('setList', res)
       })
     },
     getMyList ({commit}) {
       return api.getMyList().then(res => {
         commit('setMyList', res)
       })
+    },
+    getFinishList ({commit}) {
+      return api.getFinish().then(res => {
+        commit('setFinishList', res)
+      })
+    },
+    getActiveList ({commit}) {
+      return api.getActive().then(res => {
+        commit('setActiveList', res)
+      })
+    },
+    getDetial ({commit}, id) {
+      return api.getDetail(id).then(res => {
+        commit('setDetail', res)
+      })
+    },
+    update ({commit}, data) {
+      return api.update(data)
+    },
+    del ({commit}, id) {
+      return api.del(id)
     }
   },
   getters: {
-    getActiveList (state) {
-      return state.activeList
+    list (state) {
+      return state.list
     },
-    getFinishList (state) {
+    myList (state) {
+      return state.myList
+    },
+    finishList (state) {
       return state.finishList
     },
-    getMyList (state) {
-      return state.myList
+    activeList (state) {
+      return state.activeList
+    },
+    getDetail (state) {
+      return state.detail
     }
   },
   mutations: {
-    setActiveList (state, list) {
-      state.activeList = list
+    setList (state, list) {
+      state.list = list
+    },
+    setMyList (state, list) {
+      state.myList = list
     },
     setFinishList (state, list) {
       state.finishList = list
     },
-    setMyList (state, list) {
-      state.myList = list
+    setActiveList (state, list) {
+      state.activeList = list
+    },
+    setDetail (state, detail) {
+      state.detail = detail
     }
   }
 }

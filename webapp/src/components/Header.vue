@@ -7,11 +7,11 @@
         <span class="icon"></span>
       </div>
       <div class="nav">
-        <el-menu theme="dark" class="el-menu-demo" mode="horizontal" router="true" default-active="/">
-          <el-menu-item index="/">全部项目</el-menu-item>
-          <el-menu-item index="process">进行中</el-menu-item>
-          <el-menu-item index="finish">已完成</el-menu-item>
-          <el-menu-item index="my">我的项目</el-menu-item>
+        <el-menu theme="dark" class="el-menu-demo" mode="horizontal" :router="true" :default-active="active">
+          <el-menu-item index="/index">全部项目</el-menu-item>
+          <el-menu-item index="/process">进行中</el-menu-item>
+          <el-menu-item index="/finish">已完成</el-menu-item>
+          <el-menu-item index="/my">我的项目</el-menu-item>
         </el-menu>
       </div>
       <div class="right">
@@ -39,7 +39,8 @@ export default {
   },
   data () {
     return {
-      nickName: ''
+      nickName: '',
+      active: 'index'
     }
   },
   methods: {
@@ -52,6 +53,7 @@ export default {
   },
   mounted () {
     this.nickName = window.localStorage.getItem('nickName')
+    this.active = this.$route.path
   }
 }
 </script>

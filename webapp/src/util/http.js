@@ -1,10 +1,11 @@
 import axios from 'axios'
 import appConst from './appConst'
-export const get = (url, query) => {
+
+export const get = (url, query, isREST) => {
   const token = 'Bearer ' + window.localStorage.token
   let _url
   if (query) {
-    _url = `${appConst.BACKEND_DOMAIN}${url}?${query}`
+    _url = isREST ? `${appConst.BACKEND_DOMAIN}${url}/${objectToRESTString(query)}` : `${appConst.BACKEND_DOMAIN}${url}?${objectToString(query)}`
   } else {
     _url = `${appConst.BACKEND_DOMAIN}${url}`
   }
@@ -73,9 +74,9 @@ export const patch = (url, query) => {
     })
 }
 
-export const del = (url, article) => {
+export const del = (url, id) => {
   const token = 'Bearer ' + window.localStorage.token
-  let _url = `${appConst.BACKEND_DOMAIN}${url}/${article._id}`
+  let _url = `${appConst.BACKEND_DOMAIN}${url}/${id}`
   return axios.delete(_url, {
     headers: { authorization: token }
   })
@@ -94,4 +95,22 @@ const errorProcess = (err) => {
   if (err.response.status === 401) {
     window.location.href = '#/login'
   }
+}
+
+const objectToString = (json) => {
+  var result = ''
+  for (let j in json) {
+    let str = j + '=' + json[j]
+    result = result + str + '&'
+  }
+  result = result.substring(0, result.length - 1)
+  return result
+}
+const objectToRESTString = (json) => {
+  var result = ''
+  for (let j in json) {
+    result = result + json[j] + '/'
+  }
+  result = result.substring(0, result.length - 1)
+  return result
 }

@@ -3,15 +3,16 @@
 module.exports = app => {
   class ProjectController extends app.Controller {
     * create() {
-      // const rule = {
-      //   title: { type: 'string', required: true },
-      //   charge: { type: 'string', required: true },
-      //   developer: { type: 'array' },
-      //   endDate: { type: 'number', required: true },
-      // };
+      const rule = {
+        title: { type: 'string', required: true },
+        charge: { type: 'string', required: true },
+        developer: { type: 'array' },
+        startDate: { type: 'number', required: true },
+        endDate: { type: 'number', required: true },
+      };
       const userId = this.ctx.request.user.userId;
       this.ctx.request.body.author = userId;
-      // this.ctx.validate(rule);
+      this.ctx.validate(rule);
       yield this.app.model.project.create(this.ctx.request.body);
       this.ctx.status = 201;
     }
@@ -31,15 +32,19 @@ module.exports = app => {
       this.ctx.body = result;
     }
     * index() {
-      this.ctx.body = yield this.app.model.project.find({});
+      this.ctx.body = yield this.app.model.project.find({}).sort({ '_id' : -1 });
     }
-    * getByUserId() {
+    * getByUser() {
       const userId = this.ctx.request.user.userId;
-      this.ctx.body = yield this.app.model.project.find({ author: userId });
+      this.ctx.body = yield this.app.model.project.find({ author: userId }).sort({ '_id' : -1 });
     }
     * getByState() {
-      const state = this.ctx.request.body.state;
-      this.ctx.body = yield this.app.model.project.find({ state: state });
+      const state = this.ctx.query.state;
+      this.ctx.body = yield this.app.model.project.find({ state: state }).sort({ '_id' : -1 });
+    }
+    * getExcludeState() {
+      const state = this.ctx.query.state;
+      this.ctx.body = yield this.app.model.project.find({ state: { '$ne': state } }).sort({ '_id' : -1 });
     }
   }
   return ProjectController;

@@ -2,7 +2,8 @@
   <div class="container">
     <MyHeader></MyHeader>
     <div class="main">
-      <div class="item" v-for="item in activeList">
+      <!-- <div class="empty" v-if="list.length === 0"></div> -->
+      <div class="item" v-for="item in list">
         <div class="title">{{item.title}}</div>
         <div class="row">
           <span class="label">负责人：</span>
@@ -43,6 +44,13 @@
             </el-steps>
           </span>
         </div>
+        <div class="row">
+          <span class="label">&ensp;</span>
+          <span class="value">
+            <el-button @click="toUpdate(item._id)" type="primary" v-if="item.author === userId">编  辑</el-button>
+            <el-button @click="del(item._id)" type="danger" v-if="item.author === userId">删  除</el-button>
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -50,15 +58,18 @@
 
 <script>
 import MyHeader from '@/components/Header.vue'
-import { mapGetters } from 'vuex'
 import moment from 'moment'
 export default {
-  computed: {
-    ...mapGetters({
-      userInfo: 'user/getUserInfo',
-      activeList: 'project/getActiveList',
-      finishList: 'project/getFinishList'
-    })
+  props: {
+    list: {
+      type: Array,
+      required: true
+    }
+  },
+  data () {
+    return {
+      userId: window.localStorage.getItem('userId')
+    }
   },
   methods: {
     dateFormat (dateTime) {
@@ -79,6 +90,21 @@ export default {
       })
       result = result.substring(0, result.length - 1)
       return result
+    },
+    toUpdate (id) {
+      this.$router.push('/updateProject/' + id)
+    },
+    del (id) {
+      this.$confirm('确认删除项目？')
+        .then(res => {
+          this.$store.dispatch('project/del', id).then(res => {
+            const index = this.list.findIndex((item, index) => {
+              return item._id === id
+            })
+            this.list.splice(index, 1)
+            this.$message.success('删除成功！')
+          })
+        })
     },
     switchState (state) {
       switch (state) {
@@ -106,9 +132,6 @@ export default {
   },
   components: {
     MyHeader
-  },
-  mounted () {
-    this.$store.dispatch('project/getActiveList')
   }
 }
 </script>
@@ -117,7 +140,7 @@ export default {
 .container {
   margin: 0 auto;
   background: #E9E9E9;
-  height: 100%;
+  min-height: 100%;
 }
 
 .main {
@@ -157,6 +180,13 @@ export default {
       }
     }
   }
+  // .empty {
+  //   background: url("../../assets/empty.png") no-repeat center;
+  //   background-size: 100px 100px;
+  //   width: 100px;
+  //   height: 100px;
+  //   margin: 100px auto;
+  // }
 }
 </style>
 
