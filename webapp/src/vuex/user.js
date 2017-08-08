@@ -11,6 +11,7 @@ export default {
         window.localStorage.setItem('token', res.token)
         window.localStorage.setItem('nickName', userInfo.nickName)
         window.localStorage.setItem('userId', userInfo.userId)
+        window.localStorage.setItem('role', res.role)
       })
     },
     login ({ commit }, userInfo) {
@@ -18,6 +19,7 @@ export default {
         window.localStorage.setItem('token', res.token)
         window.localStorage.setItem('nickName', res.nickName)
         window.localStorage.setItem('userId', userInfo.userId)
+        window.localStorage.setItem('role', res.role)
       })
     },
     getUsers ({commit}) {

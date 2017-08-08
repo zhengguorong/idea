@@ -8,7 +8,8 @@ module.exports = app => {
     * login(user) {
       user.password = crypto.createHash('md5').update(user.password).digest('hex');
       if (yield this.checkUser(user.userId, user.password)) {
-        const token = jwt.sign({ userId: user.userId }, app.config.jwtSecret, { expiresIn: '7d' });
+        const userInfo = yield this.getUserById(user.userId);
+        const token = jwt.sign({ userId: user.userId, role: userInfo.role }, app.config.jwtSecret, { expiresIn: '7d' });
         this.ctx.set('authorization', 'Bearer ' + token);
         return token;
       }

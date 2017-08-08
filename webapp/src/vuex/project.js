@@ -45,6 +45,11 @@ export default {
     },
     del ({commit}, id) {
       return api.del(id)
+    },
+    changeState ({commit}, data) {
+      return api.changeState(data).then(res => {
+        commit('changeState', data)
+      })
     }
   },
   getters: {
@@ -79,6 +84,14 @@ export default {
     },
     setDetail (state, detail) {
       state.detail = detail
+    },
+    changeState (state, data) {
+      const index = state.list.findIndex((item, index) => {
+        if (item._id === data.id) {
+          return true
+        }
+      })
+      state.list[index].state = data.state
     }
   }
 }

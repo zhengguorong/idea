@@ -24,6 +24,9 @@ const update = (data) => {
 const del = (id) => {
   return http.del('/api/project', id)
 }
+const changeState = (data) => {
+  return http.get(`/api/project/${data.id}/changeState`, {state: data.state})
+}
 export default {
-  getList, create, getMyList, getFinish, getActive, getDetail, update, del
+  getList, create, getMyList, getFinish, getActive, getDetail, update, del, changeState
 }

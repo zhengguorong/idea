@@ -16,7 +16,7 @@ const isLogin = function* (next) {
     // 有效期小于一小时的重新办法token
     const isOver = exp - now < 60 * 60;
     if (isOver) {
-      const token = jwt.sign({ userId: info.userId }, this.app.config.jwtSecret, { expiresIn: '7d' });
+      const token = jwt.sign({ userId: info.userId, role: info.role }, this.app.config.jwtSecret, { expiresIn: '7d' });
       this.set('authorization', 'Bearer ' + token);
     }
   } catch (err) {

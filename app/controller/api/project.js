@@ -46,6 +46,19 @@ module.exports = app => {
       const state = this.ctx.query.state;
       this.ctx.body = yield this.app.model.project.find({ state: { '$ne': state } }).sort({ '_id' : -1 });
     }
+    * changeState() {
+      const id = this.ctx.params.id;
+      const state = this.ctx.query.state;
+      // 审核状态只有管理员才能操作
+      const role = this.ctx.request.user.role;
+      if ((state === 'ALLOW' || state === 'NOTALLOW') && role !== 'ADMIN') {
+        this.ctx.status = 400;
+        this.ctx.body = '权限不足';
+        return;
+      }
+      yield this.app.model.project.findOneAndUpdate({ _id: id }, { state, state });
+      this.ctx.status = 204;
+    }
   }
   return ProjectController;
 };
