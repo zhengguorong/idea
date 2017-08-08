@@ -108,7 +108,11 @@ export default {
               return item._id === id
             })
             this.list.splice(index, 1)
-            this.$message.success('删除成功！')
+            this.$notify({
+              title: '成功',
+              message: '删除成功！',
+              type: 'success'
+            })
           })
         })
     },
@@ -157,11 +161,25 @@ export default {
       }
     },
     changeState (id, state) {
-      this.$store.dispatch('project/changeState', {id: id, state: state})
-      .catch(e => {
-        this.$notify.error({
-          title: '错误',
-          message: e.response.data
+      let message = '确认修改项目进度吗？'
+      if (state === 'ALLOW') {
+        message = '确认审核通过项目？'
+      } else if (state === 'NOTALLOW') {
+        message = '确认审核不通过项目?'
+      }
+      this.$confirm(message).then(res => {
+        this.$store.dispatch('project/changeState', {id: id, state: state}).then(res => {
+          this.$notify({
+            title: '成功',
+            message: '修改项目进度成功！',
+            type: 'success'
+          })
+        }).catch(e => {
+          console.log(e)
+          this.$notify.error({
+            title: '错误',
+            message: e.response.data
+          })
         })
       })
     }

@@ -7,6 +7,7 @@ export default {
     myList: [],
     finishList: [],
     activeList: [],
+    examineList: [],
     detail: {}
   },
   actions: {
@@ -22,17 +23,22 @@ export default {
     },
     getMyList ({commit}) {
       return api.getMyList().then(res => {
-        commit('setMyList', res)
+        commit('setList', res)
       })
     },
     getFinishList ({commit}) {
       return api.getFinish().then(res => {
-        commit('setFinishList', res)
+        commit('setList', res)
       })
     },
     getActiveList ({commit}) {
       return api.getActive().then(res => {
-        commit('setActiveList', res)
+        commit('setList', res)
+      })
+    },
+    getExamineList ({commit}) {
+      return api.getExamine().then(res => {
+        commit('setList', res)
       })
     },
     getDetial ({commit}, id) {
@@ -56,15 +62,18 @@ export default {
     list (state) {
       return state.list
     },
-    myList (state) {
-      return state.myList
-    },
-    finishList (state) {
-      return state.finishList
-    },
-    activeList (state) {
-      return state.activeList
-    },
+    // myList (state) {
+    //   return state.myList
+    // },
+    // finishList (state) {
+    //   return state.finishList
+    // },
+    // activeList (state) {
+    //   return state.activeList
+    // },
+    // examineList (state) {
+    //   return state.examineList
+    // },
     getDetail (state) {
       return state.detail
     }
@@ -73,15 +82,18 @@ export default {
     setList (state, list) {
       state.list = list
     },
-    setMyList (state, list) {
-      state.myList = list
-    },
-    setFinishList (state, list) {
-      state.finishList = list
-    },
-    setActiveList (state, list) {
-      state.activeList = list
-    },
+    // setMyList (state, list) {
+    //   state.myList = list
+    // },
+    // setFinishList (state, list) {
+    //   state.finishList = list
+    // },
+    // setActiveList (state, list) {
+    //   state.activeList = list
+    // },
+    // setExamineList (state, list) {
+    //   state.examineList = list
+    // },
     setDetail (state, detail) {
       state.detail = detail
     },
@@ -91,7 +103,7 @@ export default {
           return true
         }
       })
-      state.list[index].state = data.state
+      state.list[index]['state'] = data['state']
     }
   }
 }

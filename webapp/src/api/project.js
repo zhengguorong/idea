@@ -9,6 +9,9 @@ const getMyList = () => {
 const getFinish = () => {
   return http.get('/api/project/getByState', {state: 'FINISH'})
 }
+const getExamine = () => {
+  return http.get('/api/project/getByState', {state: 'CREATE'})
+}
 const create = (data) => {
   return http.post('/api/project', data)
 }
@@ -28,5 +31,5 @@ const changeState = (data) => {
   return http.get(`/api/project/${data.id}/changeState`, {state: data.state})
 }
 export default {
-  getList, create, getMyList, getFinish, getActive, getDetail, update, del, changeState
+  getList, create, getMyList, getFinish, getActive, getDetail, update, del, changeState, getExamine
 }

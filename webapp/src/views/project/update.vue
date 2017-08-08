@@ -76,7 +76,11 @@ export default {
       this.$refs['projectForm'].validate((valid) => {
         if (valid) {
           this.$store.dispatch('project/update', this.detail).then(res => {
-            this.$message.success('修改成功')
+            this.$notify({
+              title: '成功',
+              message: '修改成功!',
+              type: 'success'
+            })
             this.$router.go('-1')
           })
         }

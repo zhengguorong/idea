@@ -8,7 +8,7 @@ import {mapGetters} from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      activeList: 'project/activeList'
+      activeList: 'project/list'
     })
   },
   components: {

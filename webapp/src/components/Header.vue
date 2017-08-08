@@ -11,7 +11,8 @@
           <el-menu-item index="/index">全部项目</el-menu-item>
           <el-menu-item index="/process">进行中</el-menu-item>
           <el-menu-item index="/finish">已完成</el-menu-item>
-          <el-menu-item index="/my">我的项目</el-menu-item>
+          <el-menu-item v-if="role === 'USER'" index="/my">我的项目</el-menu-item>
+          <el-menu-item v-if="role === 'ADMIN'" index="/examine">待审核</el-menu-item>
         </el-menu>
       </div>
       <div class="right">
@@ -40,7 +41,8 @@ export default {
   data () {
     return {
       nickName: '',
-      active: 'index'
+      active: 'index',
+      role: window.localStorage.getItem('role')
     }
   },
   methods: {

@@ -8,7 +8,7 @@ import {mapGetters} from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      finishList: 'project/finishList'
+      finishList: 'project/list'
     })
   },
   components: {
