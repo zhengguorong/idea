@@ -1,5 +1,5 @@
 'use strict';
-
+const path = require('path');
 module.exports = appInfo => {
   const config = {};
   // 微信相关
@@ -35,12 +35,20 @@ module.exports = appInfo => {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
-  config.middleware = [ 'errorHandler' ]; // 使用koa的中间件
+  config.middleware = ['errorHandler']; // 使用koa的中间件
   config.auth = {
     test: 'tst',
   };
   config.errorHandler = {
     match: '/api',
+  };
+  config.static = {
+    prefix: '/',
+    dir: path.join(appInfo.baseDir, 'webapp/dist'),
+    dynamic: true,
+    preload: false,
+    buffer: false,
+    maxFiles: 1000,
   };
   return config;
 };

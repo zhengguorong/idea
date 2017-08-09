@@ -175,7 +175,6 @@ export default {
             type: 'success'
           })
         }).catch(e => {
-          console.log(e)
           this.$notify.error({
             title: '错误',
             message: e.response.data
@@ -246,15 +245,12 @@ export default {
       i:hover {
         color: #20a0ff
       }
+      .el-icon-edit {
+        color: #20a0ff
+      }
     }
   }
-  // .empty {
-  //   background: url("../../assets/empty.png") no-repeat center;
-  //   background-size: 100px 100px;
-  //   width: 100px;
-  //   height: 100px;
-  //   margin: 100px auto;
-  // }
+
 }
 </style>
 

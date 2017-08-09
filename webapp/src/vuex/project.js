@@ -62,38 +62,17 @@ export default {
     list (state) {
       return state.list
     },
-    // myList (state) {
-    //   return state.myList
-    // },
-    // finishList (state) {
-    //   return state.finishList
-    // },
-    // activeList (state) {
-    //   return state.activeList
-    // },
-    // examineList (state) {
-    //   return state.examineList
-    // },
     getDetail (state) {
       return state.detail
+    },
+    isFetching (state) {
+      return state.isFetching
     }
   },
   mutations: {
     setList (state, list) {
       state.list = list
     },
-    // setMyList (state, list) {
-    //   state.myList = list
-    // },
-    // setFinishList (state, list) {
-    //   state.finishList = list
-    // },
-    // setActiveList (state, list) {
-    //   state.activeList = list
-    // },
-    // setExamineList (state, list) {
-    //   state.examineList = list
-    // },
     setDetail (state, detail) {
       state.detail = detail
     },
@@ -103,7 +82,7 @@ export default {
           return true
         }
       })
-      state.list[index]['state'] = data['state']
+      state.list[index].state = data.state
     }
   }
 }

@@ -7,10 +7,10 @@ const register = (userInfo) => {
   return http.post('/api/user/register', userInfo)
 }
 const logout = () => {
-  return http.get('/api/user/logout')
+  return http.post('/api/user/logout')
 }
 const getUsers = () => {
-  return http.get('/api/users')
+  return http.post('/api/users')
 }
 
 export default {

@@ -1,5 +1,7 @@
 import axios from 'axios'
 import appConst from './appConst'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 export const get = (url, query, isREST) => {
   const token = 'Bearer ' + window.localStorage.token
@@ -114,3 +116,18 @@ const objectToRESTString = (json) => {
   result = result.substring(0, result.length - 1)
   return result
 }
+axios.interceptors.request.use((config) => {
+  NProgress.start()
+  return config
+}, (error) => {
+  NProgress.done()
+  return Promise.reject(error)
+})
+
+axios.interceptors.response.use((response) => {
+  NProgress.done()
+  return response
+}, (error) => {
+  NProgress.done()
+  return Promise.reject(error)
+})

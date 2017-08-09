@@ -17,17 +17,17 @@ module.exports = app => {
       this.ctx.status = 201;
     }
     * destroy() {
-      const id = this.ctx.params.id;
+      const id = this.ctx.request.body.id;
       yield this.app.model.project.remove({ _id: id });
       this.ctx.status = 200;
     }
     * update() {
-      const id = this.ctx.params.id;
-      yield this.app.model.project.findOneAndUpdate({ _id: id }, this.ctx.request.body);
+      const body = this.ctx.request.body;
+      yield this.app.model.project.findOneAndUpdate({ _id: body._id }, body);
       this.ctx.status = 204;
     }
     * show() {
-      const id = this.ctx.params.id;
+      const id = this.ctx.request.body.id;
       const result = yield this.app.model.project.findOne({ _id: id });
       this.ctx.body = result;
     }
@@ -39,16 +39,16 @@ module.exports = app => {
       this.ctx.body = yield this.app.model.project.find({ author: userId }).sort({ '_id' : -1 });
     }
     * getByState() {
-      const state = this.ctx.query.state;
+      const state = this.ctx.request.body.state;
       this.ctx.body = yield this.app.model.project.find({ state: state }).sort({ '_id' : -1 });
     }
     * getExcludeState() {
-      const state = this.ctx.query.state;
+      const state = this.ctx.request.body.state;
       this.ctx.body = yield this.app.model.project.find({ state: { '$ne': state } }).sort({ '_id' : -1 });
     }
     * changeState() {
-      const id = this.ctx.params.id;
-      const state = this.ctx.query.state;
+      const id = this.ctx.request.body.id;
+      const state = this.ctx.request.body.state;
       // 审核状态只有管理员才能操作
       const role = this.ctx.request.user.role;
       if ((state === 'ALLOW' || state === 'NOTALLOW') && role !== 'ADMIN') {
