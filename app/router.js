@@ -2,10 +2,6 @@
 
 module.exports = app => {
   const auth = app.middlewares.auth();
-  // 页面路由
-  app.get('/', 'web.project.list');
-  app.get('/login', 'web.user.login');
-  app.get('/register', 'web.user.register');
 
   // 接口路由
   app.post('/api/user/register', 'api.user.register');
