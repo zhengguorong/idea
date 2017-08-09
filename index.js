@@ -4,5 +4,5 @@
 
 require('egg').startCluster({
   baseDir: __dirname,
-  port: process.env.PORT || 8001, // default to 7001
+  port: process.env.PORT || 6001, // default to 7001
 });
