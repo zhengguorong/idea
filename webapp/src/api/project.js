@@ -16,7 +16,7 @@ const getList = () => {
   return http.post('/api/project')
 }
 const create = (data) => {
-  return http.post('/api/project', data)
+  return http.post('/api/project/create', data)
 }
 const getDetail = (id) => {
   return http.post('/api/project/getById', {id: id})
