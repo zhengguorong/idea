@@ -10,7 +10,6 @@ module.exports = app => {
   app.post('/api/user', auth.isLogin, 'api.user.getUser');
   app.post('/api/users', auth.isLogin, 'api.user.getUsers');
 
-  // app.resources('/api/project', auth.isLogin, 'api.project');
   app.post('/api/project', auth.isLogin, 'api.project.index');
   app.post('/api/project/update', auth.isLogin, 'api.project.update');
   app.post('/api/project/delete', auth.isLogin, 'api.project.destroy');
@@ -20,4 +19,6 @@ module.exports = app => {
   app.post('/api/project/getByUser', auth.isLogin, 'api.project.getByUser');
   app.post('/api/project/getByState', auth.isLogin, 'api.project.getByState');
   app.post('/api/project/getExcludeState', auth.isLogin, 'api.project.getExcludeState');
+
+  app.post('/api/upload', 'api.upload');
 };

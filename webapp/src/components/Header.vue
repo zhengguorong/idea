@@ -72,6 +72,15 @@ export default {
     margin: 0 auto;
   }
 }
+.count {
+  background-color: red;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  position: absolute;
+  right: 0;
+  top: 5px;
+}
 .logo {
   width: 130px;
   margin-left: 12px;

@@ -49,7 +49,7 @@
           <span class="value">
             <el-button v-if="item.state === 'CREATE'&&role === 'ADMIN'" @click="changeState(item._id, 'ALLOW')" size="small" icon="circle-check" type="primary">审核通过</el-button>
             <el-button v-if="item.state === 'CREATE'&&role === 'ADMIN'" @click="changeState(item._id, 'NOTALLOW')" size="small" type="danger" icon="circle-close">审核不通过</el-button>
-            <el-button v-if="role === 'USER'&&item.state!=='FINISH' && item.state !== 'NOTALLOW'&& getNextState(item.state).key !== 'ALLOW'" @click="changeState(item._id, getNextState(item.state).key)" type="success" size="small" icon="check">{{getNextState(item.state).name}}</el-button>
+            <el-button v-if="role === 'USER'&&item.state!=='FINISH' && item.state !== 'NOTALLOW'&& getNextState(item.state).key !== 'ALLOW'" @click="changeState(item._id, getNextState(item.state).key)" type="primary" size="small" icon="check">{{getNextState(item.state).name}}</el-button>
           </span>
         </div>
         <div class="action">

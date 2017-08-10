@@ -34,6 +34,14 @@
             </el-form-item>
           </el-col>
         </el-form-item>
+        <el-form-item label="文件上传：">
+          <el-upload
+            ref="upload"
+            action="http://localhost:7001/api/upload"
+            :multiple="true">
+            <el-button size="small" type="text">点击上传</el-button>
+          </el-upload>
+        </el-form-item>
         <el-form-item label="需求说明" prop="detail">
           <el-input :rows="5" type="textarea" v-model="form.detail"></el-input>
         </el-form-item>
@@ -80,6 +88,8 @@ export default {
   },
   methods: {
     create () {
+      const files = this.getUploadFiles()
+      this.form.files = files
       this.$refs['projectForm'].validate((valid) => {
         if (valid) {
           this.$store.dispatch('project/create', this.form).then(res => {
@@ -92,6 +102,13 @@ export default {
           })
         }
       })
+    },
+    getUploadFiles () {
+      const files = this.$refs['upload'].uploadFiles
+      const uploadFils = files.map((item, index) => {
+        return item.response
+      })
+      return uploadFils
     }
   },
   components: {
@@ -123,9 +140,6 @@ export default {
   .form {
     margin-top: 40px;
     width: 500px;
-    .charge {
-      color: #20A0FF;
-    }
     .invitation {
       color: #20A0FF;
       cursor: pointer;
