@@ -13,7 +13,7 @@ module.exports = function* (ctx) {
     const part = fs.createWriteStream(path.resolve(this.app.baseDir + '/app/public/upload') + '/' + fileName);
     stream.pipe(part, { end: false });
     const accessPath = domain + '/upload/' + fileName;
-    ctx.body = { accessPath: accessPath, filename: stream.filename };
+    ctx.body = { url: accessPath, name: stream.filename };
     // process file or upload to cloud storage
   } catch (err) {
     // must consume the stream, otherwise browser will be stuck.

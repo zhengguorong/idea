@@ -3,7 +3,7 @@
     <MyHeader></MyHeader>
     <div class="main">
       <!-- <div class="empty" v-if="list.length === 0"></div> -->
-      <div class="item" v-for="item in list">
+      <div class="item" v-for="item in list" :key="item._id">
         <div class="title">{{item.title}}</div>
         <div class="row">
           <span class="label">负责人：</span>
@@ -29,6 +29,17 @@
           <span class="label">需求说明：</span>
           <span class="value">{{item.detail}}</span>
         </div>
+        <div class="row"  v-if="item.files.length > 0">
+          <span class="label">附件：</span>
+          <span class="value">
+            <template v-for="file in item.files" >
+              <a :key="file.name" class="file" :href="file.url" target="_blank">
+                <i class="el-icon-document"></i>{{file.name}}
+              </a>
+            </template>
+
+          </span>
+        </div>
         <div class="row">
           <span class="label">项目进度：</span>
           <span class="value">
@@ -53,8 +64,8 @@
           </span>
         </div>
         <div class="action">
-            <i @click="toUpdate(item._id)" v-if="item.author === userId" class="el-icon-edit"></i>
-            <i @click="del(item._id)" v-if="item.author === userId" class="el-icon-delete"></i>
+            <i @click="toUpdate(item._id)" v-if="item.author === userId" class="el-icon-edit"> 编辑</i>
+            <i @click="del(item._id)" v-if="item.author === userId" class="el-icon-delete"> 删除</i>
         </div>
       </div>
     </div>
@@ -227,6 +238,11 @@ export default {
         line-height: 1.5;
         float: left;
       }
+      .file {
+        padding-right: 15px;
+        cursor: pointer;
+        color: #20a0ff;
+      }
     }
     .row.detail {
       .value {
@@ -239,7 +255,7 @@ export default {
       right: 20px;
       i {
         cursor: pointer;
-        font-size: 20px;
+        font-size: 15px;
         margin-right: 30px;
       }
       i:hover {

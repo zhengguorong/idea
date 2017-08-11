@@ -34,6 +34,15 @@
             </el-form-item>
           </el-col>
         </el-form-item>
+        <el-form-item label="文件上传：">
+          <el-upload
+            ref="upload"
+            :action="uploadUrl"
+            :multiple="true"
+            :file-list="detail.files">
+            <el-button size="small" type="text">点击上传</el-button>
+          </el-upload>
+        </el-form-item>
         <el-form-item label="需求说明" prop="detail">
           <el-input :rows="5" type="textarea" v-model="detail.detail"></el-input>
         </el-form-item>
@@ -48,10 +57,12 @@
 <script>
 import MyHeader from '@/components/Header.vue'
 import { mapGetters } from 'vuex'
+import appConst from '@/util/appConst'
 export default {
   data () {
     return {
       platforms: ['App', '微信', '网站', '管理后台'],
+      uploadUrl: appConst.BACKEND_DOMAIN + '/api/upload',
       projectRule: {
         title: [
           { required: true, message: '请输入项目标题', trigger: 'blur' }
@@ -73,6 +84,8 @@ export default {
   },
   methods: {
     update () {
+      const files = this.getUploadFiles()
+      this.detail.files = files
       this.$refs['projectForm'].validate((valid) => {
         if (valid) {
           this.$store.dispatch('project/update', this.detail).then(res => {
@@ -85,6 +98,18 @@ export default {
           })
         }
       })
+    },
+    getUploadFiles () {
+      const files = this.$refs['upload'].uploadFiles
+      const uploadFils = files.map((item, index) => {
+        if (item.response) {
+          return {name: item.response.name, url: item.response.url}
+        } else {
+          const data = {name: item.name, url: item.url}
+          return data
+        }
+      })
+      return uploadFils
     }
   },
   components: {

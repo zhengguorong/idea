@@ -37,7 +37,7 @@
         <el-form-item label="文件上传：">
           <el-upload
             ref="upload"
-            action="http://localhost:7001/api/upload"
+            :action="uploadUrl"
             :multiple="true">
             <el-button size="small" type="text">点击上传</el-button>
           </el-upload>
@@ -57,10 +57,12 @@
 import MyHeader from '@/components/Header.vue'
 import ProjectModel from '@/model/project'
 import { mapGetters } from 'vuex'
+import appConst from '@/util/appConst'
 export default {
   data () {
     return {
       form: new ProjectModel(),
+      uploadUrl: appConst.BACKEND_DOMAIN + '/api/upload',
       platforms: ['App', '微信', '网站', '管理后台'],
       projectRule: {
         title: [
