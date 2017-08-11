@@ -77,7 +77,7 @@ export default {
       // 限制结束时间大于开始时间
       pickerOptions: {
         disabledDate: (time) => {
-          return time.getTime() < this.form && this.form.startDate.getTime()
+          return time.getTime() < this.form.startDate.getTime()
         }
       }
     }
