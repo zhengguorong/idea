@@ -75,6 +75,12 @@ module.exports = appInfo => {
       '.mp4',
       '.avi',
       '.pdf',
+      '.doc',
+      '.xls',
+      '.ppt',
+      '.docx',
+      '.xlsx',
+      '.pptx',
     ],
   };
   return config;
