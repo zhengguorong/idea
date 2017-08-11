@@ -1,33 +1,13 @@
 # idea
 
+本地环境
+后端工程npm run dev
+前端工程：cd webapp && npm run dev
 
+测试环境
+EGG_SERVER_ENV=test pm2 start index.js --name 'ideaTest'
+前端工程打包 cd webapp && npm run build-test
 
-## QuickStart
-
-<!-- add docs here for user -->
-
-see [egg docs][egg] for more detail.
-
-### Development
-```shell
-$ npm install
-$ npm run dev
-$ open http://localhost:7001/news
-```
-
-### Deploy
-
-Use `EGG_SERVER_ENV=prod` to enable prod mode
-
-```shell
-$ EGG_SERVER_ENV=prod npm start
-```
-
-### npm scripts
-
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
-
-
-[egg]: https://eggjs.org
+正式环境
+EGG_SERVER_ENV=prod pm2 start index.js --name 'idea'
+前端工程打包 cd webapp && npm run build
