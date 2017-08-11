@@ -47,6 +47,7 @@ export default {
       })
     },
     update ({commit}, data) {
+      commit('update', data)
       return api.update(data)
     },
     del ({commit}, id) {
@@ -83,6 +84,19 @@ export default {
         }
       })
       state.list[index].state = data.state
+    },
+    update (state, data) {
+      const updateItem = state.list.find((item, index) => {
+        if (item._id === data._id) {
+          return true
+        }
+      })
+      for (let key in data) {
+        if (key !== '_id') {
+          updateItem[key] = data[key]
+          return
+        }
+      }
     }
   }
 }

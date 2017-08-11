@@ -13,7 +13,7 @@
             <el-input type="text" v-model="loginForm.userId" placeholder="帐号(邮箱或者手机号)"></el-input>
           </el-form-item>
           <el-form-item prop="name">
-            <el-input type="text" v-model="loginForm.name" placeholder="昵称"></el-input>
+            <el-input type="text" v-model="loginForm.name" placeholder="请输入真实名字"></el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
@@ -65,7 +65,7 @@
             {required: true, message: '请输入邮箱或手机号', trigger: 'blur'}
           ],
           name: [
-            {required: true, message: '请输入昵称', trigger: 'blur'}
+            {required: true, message: '请输入真实名字', trigger: 'blur'}
           ],
           password: [
             { validator: validatePass, trigger: 'blur' }

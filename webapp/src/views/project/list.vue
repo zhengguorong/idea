@@ -29,6 +29,10 @@
           <span class="label">需求说明：</span>
           <span class="value">{{item.detail}}</span>
         </div>
+        <div class="row" v-if="item.examineMessage">
+          <span class="label">审核意见：</span>
+          <span class="value">{{item.examineMessage}}</span>
+        </div>
         <div class="row"  v-if="item.files.length > 0">
           <span class="label">附件：</span>
           <span class="value">
@@ -60,12 +64,12 @@
           <span class="value">
             <el-button v-if="item.state === 'CREATE'&&role === 'ADMIN'" @click="changeState(item._id, 'ALLOW')" size="small" icon="circle-check" type="primary">审核通过</el-button>
             <el-button v-if="item.state === 'CREATE'&&role === 'ADMIN'" @click="changeState(item._id, 'NOTALLOW')" size="small" type="danger" icon="circle-close">审核不通过</el-button>
-            <el-button v-if="role === 'USER'&&item.state!=='FINISH' && item.state !== 'NOTALLOW'&& getNextState(item.state).key !== 'ALLOW'" @click="changeState(item._id, getNextState(item.state).key)" type="primary" size="small" icon="check">{{getNextState(item.state).name}}</el-button>
+            <el-button v-if="role === 'USER'&&item.state!=='FINISH' && item.state !== 'NOTALLOW'&& getNextState(item.state).key !== 'ALLOW' && userId === item.author" @click="changeState(item._id, getNextState(item.state).key)" type="primary" size="small" icon="check">{{getNextState(item.state).name}}</el-button>
           </span>
         </div>
         <div class="action">
             <i @click="toUpdate(item._id)" v-if="item.author === userId" class="el-icon-edit"> 编辑</i>
-            <i @click="del(item._id)" v-if="item.author === userId" class="el-icon-delete"> 删除</i>
+            <i @click="del(item._id)" v-if="item.author === userId" class="el-icon-delete2"> 删除</i>
         </div>
       </div>
     </div>
@@ -177,21 +181,37 @@ export default {
         message = '确认审核通过项目？'
       } else if (state === 'NOTALLOW') {
         message = '确认审核不通过项目?'
-      }
-      this.$confirm(message).then(res => {
-        this.$store.dispatch('project/changeState', {id: id, state: state}).then(res => {
-          this.$notify({
-            title: '成功',
-            message: '修改项目进度成功！',
-            type: 'success'
-          })
-        }).catch(e => {
-          this.$notify.error({
-            title: '错误',
-            message: e.response.data
+        this.$prompt(message).then(res => {
+          this.$store.dispatch('project/update', {_id: id, examineMessage: res.value})
+          this.$store.dispatch('project/changeState', {id: id, state: state}).then(res => {
+            this.$notify({
+              title: '成功',
+              message: '修改项目进度成功！',
+              type: 'success'
+            })
+          }).catch(e => {
+            this.$notify.error({
+              title: '错误',
+              message: e.response.data
+            })
           })
         })
-      })
+      } else {
+        this.$confirm(message).then(res => {
+          this.$store.dispatch('project/changeState', {id: id, state: state}).then(res => {
+            this.$notify({
+              title: '成功',
+              message: '修改项目进度成功！',
+              type: 'success'
+            })
+          }).catch(e => {
+            this.$notify.error({
+              title: '错误',
+              message: e.response.data
+            })
+          })
+        })
+      }
     }
   },
   components: {
@@ -209,7 +229,7 @@ export default {
 
 .main {
   width: 1140px;
-  margin: 12px auto;
+  margin: 12px auto 0 auto;
   font-size: 14px;
   overflow: hidden;
   .item {

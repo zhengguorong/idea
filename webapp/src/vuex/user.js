@@ -33,7 +33,14 @@ export default {
       return state.userInfo
     },
     getUsers (state) {
-      return state.users
+      const users = []
+      // 过滤管理者和自己
+      state.users.forEach((item, index) => {
+        if (item.role === 'USER' && item.userId !== window.localStorage.getItem('userId')) {
+          users.push(item)
+        }
+      })
+      return users
     }
   },
   mutations: {

@@ -21,10 +21,10 @@
         <div class="create" @click="createProject" v-if="showCreate">
           <el-button type="primary" size="small">创建项目</el-button>
         </div>
-        <div class="message">
+        <!-- <div class="message">
           <i class="el-icon-message"></i>
-        </div>
-        <!-- <span class="logout"></span> -->
+        </div> -->
+         <span class="logout" @click="logout"></span>
       </div>
     </div>
   </div>
@@ -51,6 +51,10 @@ export default {
     },
     createProject () {
       this.$router.push('createProject')
+    },
+    logout () {
+      this.$router.push('login')
+      window.localStorage.setItem('token', '')
     }
   },
   mounted () {
@@ -117,7 +121,7 @@ export default {
   display: table-cell;
   vertical-align: bottom;
   .userInfo {
-    margin-right: 20px;
+    // margin-right: 20px;
     float: left;
   }
   .message {
@@ -131,7 +135,7 @@ export default {
     background-size: 25px 25px;
     width: 25px;
     height: 25px;
-    margin: 15px 20px 0 20px;
+    margin: 17px 20px 0 10px;
     float: right;
     cursor: pointer;
   }

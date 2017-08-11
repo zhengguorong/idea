@@ -12,6 +12,7 @@ module.exports = mongoose => {
     endDate: { type: Number, required: true }, // 结束时间
     platform: { type: Array, required: true }, // 开发平台
     files: { type: Array }, // 附件
+    examineMessage: { type: String }, // 审核信息
   });
   return mongoose.model('Project', ProjectSchema);
 };

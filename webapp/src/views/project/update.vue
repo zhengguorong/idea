@@ -30,7 +30,7 @@
           <el-col class="line" :span="2">-</el-col>
           <el-col :span="11">
             <el-form-item prop="endDate">
-              <el-date-picker type="date" v-model="detail.endDate" placeholder="选择结束日期" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" :picker-options="pickerOptions" v-model="detail.endDate" placeholder="选择结束日期" style="width: 100%;"></el-date-picker>
             </el-form-item>
           </el-col>
         </el-form-item>
@@ -73,6 +73,12 @@ export default {
         platform: [
           { type: 'array', required: true, message: '请至少选择一个开发平台', trigger: 'change' }
         ]
+      },
+      // 限制结束时间大于开始时间
+      pickerOptions: {
+        disabledDate: (time) => {
+          return time.getTime() < this.form && this.form.startDate.getTime()
+        }
       }
     }
   },
@@ -127,13 +133,13 @@ export default {
 .container {
   margin: 0 auto;
   background: #E9E9E9;
-  height: 100%;
+  min-height: 100%;
 }
 
 .main {
   width: 1060px;
   background: #fff;
-  margin: 12px auto;
+  margin: 12px auto 0 auto;
   padding: 40px;
   .title {
     font-size: 18px;
