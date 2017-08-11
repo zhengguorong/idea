@@ -10,7 +10,8 @@ module.exports = function* (ctx) {
   try {
     const ext = stream.filename.split('.')[1]; // 文件后缀名
     const fileName = uuid.v1().replace(/-/g, '') + '.' + ext;
-    const part = fs.createWriteStream(path.resolve(this.app.baseDir + '/app/public/upload') + '/' + fileName);
+    const rootPath = path.resolve(this.app.baseDir + '/app/public/upload');
+    const part = fs.createWriteStream(rootPath + '/' + fileName);
     stream.pipe(part, { end: false });
     const accessPath = domain + '/upload/' + fileName;
     ctx.body = { url: accessPath, name: stream.filename };
