@@ -19,7 +19,7 @@ module.exports = function* (ctx) {
   } catch (err) {
     // must consume the stream, otherwise browser will be stuck.
     yield sendToWormhole(stream);
-    console.log('throw error');
+    ctx.status = 400;
     throw err;
   }
 };
