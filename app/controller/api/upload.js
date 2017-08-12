@@ -12,7 +12,7 @@ module.exports = function* (ctx) {
     const fileName = uuid.v1().replace(/-/g, '') + '.' + ext;
     const rootPath = path.resolve(this.app.baseDir + '/app/public/upload');
     const part = fs.createWriteStream(rootPath + '/' + fileName);
-    stream.pipe(part, { end: false });
+    stream.pipe(part);
     const accessPath = domain + '/upload/' + fileName;
     ctx.body = { url: accessPath, name: stream.filename };
     // process file or upload to cloud storage
