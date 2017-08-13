@@ -13,6 +13,12 @@ module.exports = function* (ctx) {
     const rootPath = path.resolve(this.app.baseDir + '/app/public/upload');
     const part = fs.createWriteStream(rootPath + '/' + fileName);
     stream.pipe(part);
+    part.on('error', err => {
+      console.log(err, 'upload Error');
+    });
+    part.on('finish', err => {
+      console.log(err, 'upload finish');
+    });
     const accessPath = domain + '/upload/' + fileName;
     ctx.body = { url: accessPath, name: stream.filename };
     // process file or upload to cloud storage
