@@ -23,7 +23,7 @@ module.exports = function* (ctx) {
       console.error(src, 'Something has stopped piping into the writer.');
     });
     part.on('close', src => {
-      console.log(src, close);
+      console.log(src, 'close');
     });
     const accessPath = domain + '/upload/' + fileName;
     ctx.body = { url: accessPath, name: stream.filename };
