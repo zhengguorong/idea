@@ -19,6 +19,12 @@ module.exports = function* (ctx) {
     part.on('finish', err => {
       console.log(err, 'upload finish');
     });
+    part.on('unpipe', src => {
+      console.error(src, 'Something has stopped piping into the writer.');
+    });
+    part.on('close', src => {
+      console.log(src, close);
+    });
     const accessPath = domain + '/upload/' + fileName;
     ctx.body = { url: accessPath, name: stream.filename };
     // process file or upload to cloud storage
