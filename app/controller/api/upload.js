@@ -13,17 +13,14 @@ module.exports = function* (ctx) {
     const rootPath = path.resolve(this.app.baseDir + '/app/public/upload');
     const part = fs.createWriteStream(rootPath + '/' + fileName);
     stream.pipe(part);
-    part.on('error', err => {
+    stream.on('error', err => {
       console.log(err, 'upload Error');
     });
-    part.on('finish', err => {
+    stream.on('finish', err => {
       console.log(err, 'upload finish');
     });
-    part.on('unpipe', src => {
-      console.error(src, 'Something has stopped piping into the writer.');
-    });
-    part.on('close', src => {
-      console.log(src, 'close');
+    stream.on('end', () => {
+      console.log('upload end');
     });
     const accessPath = domain + '/upload/' + fileName;
     ctx.body = { url: accessPath, name: stream.filename };
