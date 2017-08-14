@@ -53,7 +53,7 @@ module.exports = appInfo => {
   };
   config.multipart = {
     defaultCharset: 'utf8',
-    fileSize: '20m',
+    fileSize: '20mb',
     whitelist: [
       '.jpg', '.jpeg', // image/jpeg
       '.png', // image/png, image/x-png
