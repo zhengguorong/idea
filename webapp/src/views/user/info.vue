@@ -78,10 +78,6 @@ export default {
               type: 'success',
               message: '修改成功！'
             })
-            // 刷新页面
-            setTimeout(() => {
-              window.location.reload()
-            }, 300)
           })
         }
       })
