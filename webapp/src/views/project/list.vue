@@ -123,7 +123,7 @@ export default {
               return item._id === id
             })
             this.list.splice(index, 1)
-            this.$notify({
+            this.$message({
               title: '成功',
               message: '删除成功！',
               type: 'success'
@@ -184,30 +184,32 @@ export default {
         this.$prompt(message).then(res => {
           this.$store.dispatch('project/update', {_id: id, examineMessage: res.value})
           this.$store.dispatch('project/changeState', {id: id, state: state}).then(res => {
-            this.$notify({
+            this.$message({
               title: '成功',
               message: '修改项目进度成功！',
               type: 'success'
             })
           }).catch(e => {
-            this.$notify.error({
+            this.$message({
               title: '错误',
-              message: e.response.data
+              message: e.response.data,
+              type: 'error'
             })
           })
         })
       } else {
         this.$confirm(message).then(res => {
           this.$store.dispatch('project/changeState', {id: id, state: state}).then(res => {
-            this.$notify({
+            this.$message({
               title: '成功',
               message: '修改项目进度成功！',
               type: 'success'
             })
           }).catch(e => {
-            this.$notify.error({
+            this.$message({
               title: '错误',
-              message: e.response.data
+              message: e.response.data,
+              type: 'error'
             })
           })
         })
