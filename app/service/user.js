@@ -53,6 +53,15 @@ module.exports = app => {
       const users = yield app.model.user.find({}, '-_id -password -__v');
       return users;
     }
+    * update(userId, updateDate) {
+      const user = yield this.app.model.user.findOneAndUpdate({ userId }, updateDate);
+      return user;
+    }
+    * changePassword(userId, pwd) {
+      const password = crypto.createHash('md5').update(pwd).digest('hex');
+      const user = yield app.model.user.findOneAndUpdate({ userId }, { password });
+      return user;
+    }
   }
   return UserService;
 };

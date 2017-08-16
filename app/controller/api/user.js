@@ -41,6 +41,24 @@ module.exports = app => {
       const users = yield this.ctx.service.user.getUsers();
       this.ctx.body = users;
     }
+    * update() {
+      const userId = this.ctx.request.user.userId;
+      const updateInfo = this.ctx.request.body;
+      yield this.ctx.service.user.update(userId, { email: updateInfo.email, mobilePhone: updateInfo.mobilePhone, nickName: updateInfo.nickName });
+      const user = yield this.ctx.service.user.getUserById(userId);
+      this.ctx.body = user;
+    }
+    * changePassword() {
+      const userId = this.ctx.request.user.userId;
+      const password = this.ctx.request.body.password;
+      if (!password) {
+        this.ctx.status = 400;
+        this.ctx.body = '密码为空';
+        return;
+      }
+      yield this.ctx.service.user.changePassword(userId, password);
+      this.ctx.body = '修改成功';
+    }
   }
   return UserController;
 };

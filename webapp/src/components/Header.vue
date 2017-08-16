@@ -17,7 +17,7 @@
       </div>
       <div class="right">
         <!-- <span class="login">登录</span> -->
-        <div class="userInfo">{{nickName}}</div>
+        <div class="userInfo" @click="userInfo">{{nickName}}</div>
         <div class="create" @click="createProject" v-if="showCreate">
           <el-button type="primary" size="small">创建项目</el-button>
         </div>
@@ -55,6 +55,9 @@ export default {
     logout () {
       this.$router.push('login')
       window.localStorage.setItem('token', '')
+    },
+    userInfo () {
+      this.$router.push('userInfo')
     }
   },
   mounted () {
@@ -123,6 +126,7 @@ export default {
   .userInfo {
     // margin-right: 20px;
     float: left;
+    cursor: pointer;
   }
   .message {
     float: left;

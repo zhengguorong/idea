@@ -39,4 +39,8 @@ export default [{
   path: '/updateProject/:id',
   name: 'updateProject',
   component: require('@/views/project/update')
+}, {
+  path: '/userInfo',
+  name: 'userInfo',
+  component: require('@/views/user/info')
 }]

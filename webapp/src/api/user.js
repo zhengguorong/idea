@@ -12,7 +12,16 @@ const logout = () => {
 const getUsers = () => {
   return http.post('/api/users')
 }
+const getUser = () => {
+  return http.post('/api/user')
+}
+const update = (userInfo) => {
+  return http.post('/api/user/update', userInfo)
+}
+const changePassword = (password) => {
+  return http.post('/api/user/changePassword', {password})
+}
 
 export default {
-  login, register, logout, getUsers
+  login, register, logout, getUsers, getUser, update, changePassword
 }

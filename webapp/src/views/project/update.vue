@@ -39,7 +39,8 @@
             ref="upload"
             :action="uploadUrl"
             :multiple="true"
-            :file-list="detail.files">
+            :file-list="detail.files"
+            :on-error="uploadError">
             <el-button size="small" type="text">点击上传</el-button>
           </el-upload>
         </el-form-item>
@@ -104,6 +105,19 @@ export default {
           })
         }
       })
+    },
+    uploadError (err) {
+      if (err.status === 413) {
+        this.$message({
+          message: '上传文件不能大于20MB',
+          type: 'error'
+        })
+      } else if (err.status === 400) {
+        this.$message({
+          message: '上传文件超出限制',
+          type: 'error'
+        })
+      }
     },
     getUploadFiles () {
       const files = this.$refs['upload'].uploadFiles

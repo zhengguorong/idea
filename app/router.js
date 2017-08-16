@@ -9,6 +9,8 @@ module.exports = app => {
   app.post('/api/user/login', 'api.user.login');
   app.post('/api/user', auth.isLogin, 'api.user.getUser');
   app.post('/api/users', auth.isLogin, 'api.user.getUsers');
+  app.post('/api/user/update', auth.isLogin, 'api.user.update');
+  app.post('/api/user/changePassword', auth.isLogin, 'api.user.changePassword');
 
   app.post('/api/project', auth.isLogin, 'api.project.index');
   app.post('/api/project/update', auth.isLogin, 'api.project.update');

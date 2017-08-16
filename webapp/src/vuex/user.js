@@ -3,7 +3,8 @@ import api from '@/api/user'
 export default {
   namespaced: true,
   state: {
-    users: []
+    users: [],
+    user: {}
   },
   actions: {
     register ({ commit }, userInfo) {
@@ -26,6 +27,19 @@ export default {
       return api.getUsers().then(res => {
         commit('setUsers', res)
       })
+    },
+    getUser ({commit}) {
+      return api.getUser().then(res => {
+        commit('setUser', res)
+      })
+    },
+    update ({commit}, userInfo) {
+      return api.update(userInfo).then(res => {
+        window.localStorage.setItem('nickName', res.nickName)
+      })
+    },
+    changePassword ({commit}, password) {
+      return api.changePassword(password)
     }
   },
   getters: {
@@ -41,6 +55,9 @@ export default {
         }
       })
       return users
+    },
+    getUser (state) {
+      return state.user
     }
   },
   mutations: {
@@ -49,6 +66,9 @@ export default {
     },
     setUsers (state, users) {
       state.users = users
+    },
+    setUser (state, user) {
+      state.user = user
     }
   }
 }
