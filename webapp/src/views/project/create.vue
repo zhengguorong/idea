@@ -38,7 +38,8 @@
           <el-upload
             ref="upload"
             :action="uploadUrl"
-            :multiple="true">
+            :multiple="true"
+            :on-error="uploadError">
             <el-button size="small" type="text">点击上传</el-button>
           </el-upload>
         </el-form-item>
@@ -110,6 +111,9 @@ export default {
           })
         }
       })
+    },
+    uploadError (err) {
+      console.log(err)
     },
     getUploadFiles () {
       const files = this.$refs['upload'].uploadFiles

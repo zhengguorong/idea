@@ -29,10 +29,7 @@
           <span class="label">需求说明：</span>
           <span class="value">{{item.detail}}</span>
         </div>
-        <div class="row" v-if="item.examineMessage">
-          <span class="label">审核意见：</span>
-          <span class="value">{{item.examineMessage}}</span>
-        </div>
+
         <div class="row" v-if="item.files.length > 0">
           <span class="label">附件：</span>
           <span class="value">
@@ -41,7 +38,6 @@
                 <i class="el-icon-document"></i>{{file.name}}
               </a>
             </template>
-
           </span>
         </div>
         <div class="row">
@@ -58,6 +54,10 @@
               <el-step title="上线完毕"></el-step>
             </el-steps>
           </span>
+        </div>
+        <div class="row" v-if="item.examineMessage">
+          <span class="label">审核意见：</span>
+          <span class="value">{{item.examineMessage}}</span>
         </div>
         <div class="row">
           <span class="label">&nbsp;</span>
@@ -158,7 +158,7 @@ export default {
         case 'CREATE':
           return { key: 'ALLOW', name: '等待审核' }
         case 'ALLOW':
-          return { key: 'PP', name: '人员准备' }
+          return { key: 'PP', name: '人员已确认' }
         case 'PP':
           return { key: 'SRA', name: '需求调研' }
         case 'SRA':
