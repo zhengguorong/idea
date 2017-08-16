@@ -58,14 +58,5 @@ module.exports = appInfo => {
       '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.psd', '.svg', '.js', '.jsx', '.json', '.css', '.less', '.html', '.htm', '.xml', '.zip', '.gz', '.tgz', '.gzip', '.rar', '.mp3', '.mp4', '.avi', '.pdf', '.doc', '.xls', '.ppt', '.docx', '.xlsx', '.pptx',
     ],
   };
-  config.oss = {
-    client: {
-      accessKeyId: 'LTAIJT9W2TaWtUQC',
-      accessKeySecret: 'K14JPFpx0lY7lXdHAWTQ1WvlqsmJsn',
-      bucket: 'chaosidea',
-      endpoint: 'oss-cn-shenzhen.aliyuncs.com',
-      timeout: '60s',
-    },
-  };
   return config;
 };

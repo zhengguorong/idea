@@ -8,7 +8,6 @@
     "egg-cors": "^1.2.0",
     "egg-mongoose": "^1.1.1",
     "egg-multipart": "^1.5.0",
-    "egg-oss": "^1.0.2",
     "egg-validate": "^1.0.0",
     "egg-view-nunjucks": "^2.0.0",
     "jsonwebtoken": "^7.3.0",
