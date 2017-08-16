@@ -36,7 +36,7 @@ module.exports = appInfo => {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
-  config.middleware = [ 'errorHandler' ]; // 使用koa的中间件
+  config.middleware = ['errorHandler']; // 使用koa的中间件
   config.auth = {
     test: 'tst',
   };
@@ -45,7 +45,7 @@ module.exports = appInfo => {
   };
   config.static = {
     prefix: '/',
-    dir: [ path.join(appInfo.baseDir, 'webapp/dist'), path.join(appInfo.baseDir, 'app/public') ],
+    dir: [path.join(appInfo.baseDir, 'webapp/dist'), path.join(appInfo.baseDir, 'app/public')],
     dynamic: true,
     preload: false,
     buffer: false,
@@ -55,33 +55,17 @@ module.exports = appInfo => {
     defaultCharset: 'utf8',
     fileSize: '20mb',
     whitelist: [
-      '.jpg', '.jpeg', // image/jpeg
-      '.png', // image/png, image/x-png
-      '.gif', // image/gif
-      '.bmp', // image/bmp
-      '.wbmp', // image/vnd.wap.wbmp
-      '.webp',
-      '.tif',
-      '.psd',
-      '.svg',
-      '.js', '.jsx',
-      '.json',
-      '.css', '.less',
-      '.html', '.htm',
-      '.xml',
-      '.zip',
-      '.gz', '.tgz', '.gzip',
-      '.mp3',
-      '.mp4',
-      '.avi',
-      '.pdf',
-      '.doc',
-      '.xls',
-      '.ppt',
-      '.docx',
-      '.xlsx',
-      '.pptx',
+      '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.psd', '.svg', '.js', '.jsx', '.json', '.css', '.less', '.html', '.htm', '.xml', '.zip', '.gz', '.tgz', '.gzip', '.rar', '.mp3', '.mp4', '.avi', '.pdf', '.doc', '.xls', '.ppt', '.docx', '.xlsx', '.pptx',
     ],
+  };
+  config.oss = {
+    client: {
+      accessKeyId: 'LTAIJT9W2TaWtUQC',
+      accessKeySecret: 'K14JPFpx0lY7lXdHAWTQ1WvlqsmJsn',
+      bucket: 'chaosidea',
+      endpoint: 'oss-cn-shenzhen.aliyuncs.com',
+      timeout: '60s',
+    },
   };
   return config;
 };
