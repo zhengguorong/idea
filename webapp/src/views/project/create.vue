@@ -113,7 +113,12 @@ export default {
       })
     },
     uploadError (err) {
-      console.log(err)
+      if (err.indexOf('413') > -1) {
+        this.$message({
+          message: '上传文件不能大于20MB',
+          type: 'error'
+        })
+      }
     },
     getUploadFiles () {
       const files = this.$refs['upload'].uploadFiles
