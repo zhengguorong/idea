@@ -7,6 +7,8 @@ module.exports = mongoose => {
     password: { type: String },
     token: { type: String },
     role: { type: String, enum: [ 'USER', 'ADMIN', 'PM' ], default: 'USER' },
+    email: { type: String },
+    mobilePhone: { type: String },
   });
 
   return mongoose.model('User', UserSchema);

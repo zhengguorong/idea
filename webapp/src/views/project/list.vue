@@ -33,10 +33,10 @@
           <span class="label">审核意见：</span>
           <span class="value">{{item.examineMessage}}</span>
         </div>
-        <div class="row"  v-if="item.files.length > 0">
+        <div class="row" v-if="item.files.length > 0">
           <span class="label">附件：</span>
           <span class="value">
-            <template v-for="file in item.files" >
+            <template v-for="file in item.files">
               <a :key="file.name" class="file" :href="file.url" target="_blank">
                 <i class="el-icon-document"></i>{{file.name}}
               </a>
@@ -68,8 +68,8 @@
           </span>
         </div>
         <div class="action">
-            <i @click="toUpdate(item._id)" v-if="item.author === userId" class="el-icon-edit"> 编辑</i>
-            <i @click="del(item._id)" v-if="item.author === userId" class="el-icon-delete2"> 删除</i>
+          <i @click="toUpdate(item._id)" v-if="item.author === userId" class="el-icon-edit"> 编辑</i>
+          <i @click="del(item._id)" v-if="item.author === userId" class="el-icon-delete2"> 删除</i>
         </div>
       </div>
     </div>
@@ -156,21 +156,21 @@ export default {
     getNextState (state) {
       switch (state) {
         case 'CREATE':
-          return {key: 'ALLOW', name: '等待审核'}
+          return { key: 'ALLOW', name: '等待审核' }
         case 'ALLOW':
-          return {key: 'PP', name: '人员准备'}
+          return { key: 'PP', name: '人员准备' }
         case 'PP':
-          return {key: 'SRA', name: '需求调研'}
+          return { key: 'SRA', name: '需求调研' }
         case 'SRA':
-          return {key: 'DESIGN', name: 'UI设计'}
+          return { key: 'DESIGN', name: 'UI设计' }
         case 'DESIGN':
-          return {key: 'CODING', name: '项目开发'}
+          return { key: 'CODING', name: '项目开发' }
         case 'CODING':
-          return {key: 'QA', name: '项目测试'}
+          return { key: 'QA', name: '项目测试' }
         case 'QA':
-          return {key: 'FINISH', name: '上线完毕'}
+          return { key: 'FINISH', name: '上线完毕' }
         case 'FINISH':
-          return {key: 'FINISH', name: '上线完毕'}
+          return { key: 'FINISH', name: '上线完毕' }
         default:
           return 1
       }
@@ -182,8 +182,8 @@ export default {
       } else if (state === 'NOTALLOW') {
         message = '确认审核不通过项目?'
         this.$prompt(message).then(res => {
-          this.$store.dispatch('project/update', {_id: id, examineMessage: res.value})
-          this.$store.dispatch('project/changeState', {id: id, state: state}).then(res => {
+          this.$store.dispatch('project/update', { _id: id, examineMessage: res.value })
+          this.$store.dispatch('project/changeState', { id: id, state: state }).then(res => {
             this.$message({
               title: '成功',
               message: '修改项目进度成功！',
@@ -197,23 +197,23 @@ export default {
             })
           })
         })
-      } else {
-        this.$confirm(message).then(res => {
-          this.$store.dispatch('project/changeState', {id: id, state: state}).then(res => {
-            this.$message({
-              title: '成功',
-              message: '修改项目进度成功！',
-              type: 'success'
-            })
-          }).catch(e => {
-            this.$message({
-              title: '错误',
-              message: e.response.data,
-              type: 'error'
-            })
-          })
-        })
+        return
       }
+      this.$confirm(message).then(res => {
+        this.$store.dispatch('project/changeState', { id: id, state: state }).then(res => {
+          this.$message({
+            title: '成功',
+            message: '修改项目进度成功！',
+            type: 'success'
+          })
+        }).catch(e => {
+          this.$message({
+            title: '错误',
+            message: e.response.data,
+            type: 'error'
+          })
+        })
+      })
     }
   },
   components: {
@@ -288,7 +288,6 @@ export default {
       }
     }
   }
-
 }
 </style>
 

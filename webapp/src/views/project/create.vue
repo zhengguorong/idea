@@ -101,7 +101,7 @@ export default {
       this.$refs['projectForm'].validate((valid) => {
         if (valid) {
           this.$store.dispatch('project/create', this.form).then(res => {
-            this.$notify({
+            this.$message({
               title: '成功',
               message: '创建成功！',
               type: 'success'
