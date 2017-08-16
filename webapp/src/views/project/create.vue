@@ -113,9 +113,14 @@ export default {
       })
     },
     uploadError (err) {
-      if (err.indexOf('413') > -1) {
+      if (err.status === 413) {
         this.$message({
           message: '上传文件不能大于20MB',
+          type: 'error'
+        })
+      } else if (err.status === 400) {
+        this.$message({
+          message: '上传文件超出限制',
           type: 'error'
         })
       }
