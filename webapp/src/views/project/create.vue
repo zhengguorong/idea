@@ -24,13 +24,13 @@
         <el-form-item label="开发时间" required>
           <el-col :span="11">
             <el-form-item prop="startDate">
-              <el-date-picker type="date" v-model="form.startDate" placeholder="选择开始日期" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" v-model="form.startDate" :picker-options="startDatePickerOptions" placeholder="选择开始日期" style="width: 100%;"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col class="line" :span="2">-</el-col>
           <el-col :span="11">
             <el-form-item prop="endDate">
-              <el-date-picker type="date" v-model="form.endDate" :picker-options="pickerOptions" placeholder="选择结束日期" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" v-model="form.endDate" :picker-options="endDatePickerOptions" placeholder="选择结束日期" style="width: 100%;"></el-date-picker>
             </el-form-item>
           </el-col>
         </el-form-item>
@@ -41,6 +41,7 @@
             :multiple="true"
             :on-error="uploadError">
             <el-button size="small" type="text">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">文件不超过20mb</div>
           </el-upload>
         </el-form-item>
         <el-form-item label="需求说明" prop="detail">
@@ -83,9 +84,27 @@ export default {
         ]
       },
       // 限制结束时间大于开始时间
-      pickerOptions: {
+      endDatePickerOptions: {
         disabledDate: (time) => {
-          return time.getTime() < this.form.startDate.getTime()
+          const type = (typeof this.form.startDate)
+          if (type === 'number') {
+            return time.getTime() < new Date(this.form.startDate).getTime()
+          } else {
+            return time.getTime() < this.form.startDate.getTime()
+          }
+        }
+      },
+      startDatePickerOptions: {
+        disabledDate: (time) => {
+          const type = (typeof this.form.endDate)
+          // 如果没选择结束时间不约束
+          if (!this.form.endDate) return false
+          // 由于选择时间后，时间类型会变成Date类型，因此要做判断
+          if (type === 'number') {
+            return time.getTime() > new Date(this.form.endDate).getTime()
+          } else {
+            return time.getTime() > this.form.endDate.getTime()
+          }
         }
       }
     }
@@ -101,6 +120,9 @@ export default {
       this.form.files = files
       this.$refs['projectForm'].validate((valid) => {
         if (valid) {
+          // 由于时间组件会绑定Date类型，因此转换为时间戳
+          this.form.startDate = this.form.startDate.getTime()
+          this.form.endDate = this.form.endDate.getTime()
           this.$store.dispatch('project/create', this.form).then(res => {
             this.$message({
               title: '成功',

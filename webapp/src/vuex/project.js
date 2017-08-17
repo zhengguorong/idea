@@ -12,8 +12,6 @@ export default {
   },
   actions: {
     create ({commit}, data) {
-      data.startDate = data.startDate.getTime()
-      data.endDate = data.endDate.getTime()
       api.create(data)
     },
     getList ({commit}) {

@@ -25,7 +25,7 @@
     <div class="main" v-if="!isUserInfoPanel">
       <div class="title">修改密码</div>
       <el-form class="form" ref="pwdForm" label-position="left" :model="user" label-width="100px">
-        <el-form-item label="密码：">
+        <el-form-item label="新密码：">
           <el-input type="password" v-model="user.password"></el-input>
         </el-form-item>
         <el-form-item label="确认密码：">
@@ -78,6 +78,9 @@ export default {
               type: 'success',
               message: '修改成功！'
             })
+            setTimeout(() => {
+              this.$router.push('/')
+            }, 300)
           })
         }
       })
@@ -99,6 +102,9 @@ export default {
             type: 'success',
             message: '修改密码成功'
           })
+          setTimeout(() => {
+            this.$router.push('/')
+          }, 300)
         }).catch(() => {
           this.$message({
             type: 'error',

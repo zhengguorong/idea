@@ -10,7 +10,7 @@
             <div><i class="el-icon-warning"></i><span>{{loginResult}}</span></div>
           </div>
           <el-form-item prop="userId">
-            <el-input class="login-id" type="text" v-model="loginForm.userId" placeholder="帐号(邮箱或者手机号)"></el-input>
+            <el-input class="login-id" type="text" v-model="loginForm.userId" placeholder="帐号"></el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input class="password" type="password" v-model="loginForm.password" placeholder="密码"></el-input>
@@ -35,7 +35,7 @@
         },
         loginRule: {
           userId: [
-            {required: true, message: '请输入邮箱或手机号', trigger: 'blur'}
+            {required: true, message: '请输入登陆账号', trigger: 'blur'}
           ],
           password: [
             {required: true, message: '请输入密码', trigger: 'blur'}

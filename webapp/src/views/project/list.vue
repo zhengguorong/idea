@@ -160,13 +160,13 @@ export default {
         case 'ALLOW':
           return { key: 'PP', name: '人员已确认' }
         case 'PP':
-          return { key: 'SRA', name: '需求调研' }
+          return { key: 'SRA', name: '需求调研完毕' }
         case 'SRA':
-          return { key: 'DESIGN', name: 'UI设计' }
+          return { key: 'DESIGN', name: 'UI设计完毕' }
         case 'DESIGN':
-          return { key: 'CODING', name: '项目开发' }
+          return { key: 'CODING', name: '开发完毕' }
         case 'CODING':
-          return { key: 'QA', name: '项目测试' }
+          return { key: 'QA', name: '测试完毕' }
         case 'QA':
           return { key: 'FINISH', name: '上线完毕' }
         case 'FINISH':
@@ -176,11 +176,8 @@ export default {
       }
     },
     changeState (id, state) {
-      let message = '确认修改项目进度吗？'
-      if (state === 'ALLOW') {
-        message = '确认审核通过项目？'
-      } else if (state === 'NOTALLOW') {
-        message = '确认审核不通过项目?'
+      if (state === 'ALLOW' || state === 'NOTALLOW') {
+        let message = state === 'ALLOW' ? '确认审核通过项目？' : '确认审核不通过项目'
         this.$prompt(message).then(res => {
           this.$store.dispatch('project/update', { _id: id, examineMessage: res.value })
           this.$store.dispatch('project/changeState', { id: id, state: state }).then(res => {
@@ -197,23 +194,23 @@ export default {
             })
           })
         })
-        return
-      }
-      this.$confirm(message).then(res => {
-        this.$store.dispatch('project/changeState', { id: id, state: state }).then(res => {
-          this.$message({
-            title: '成功',
-            message: '修改项目进度成功！',
-            type: 'success'
-          })
-        }).catch(e => {
-          this.$message({
-            title: '错误',
-            message: e.response.data,
-            type: 'error'
+      } else {
+        this.$confirm('确认修改项目进度吗？').then(res => {
+          this.$store.dispatch('project/changeState', { id: id, state: state }).then(res => {
+            this.$message({
+              title: '成功',
+              message: '修改项目进度成功！',
+              type: 'success'
+            })
+          }).catch(e => {
+            this.$message({
+              title: '错误',
+              message: e.response.data,
+              type: 'error'
+            })
           })
         })
-      })
+      }
     }
   },
   components: {

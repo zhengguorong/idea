@@ -24,13 +24,13 @@
         <el-form-item label="开发时间" required>
           <el-col :span="11">
             <el-form-item prop="startDate">
-              <el-date-picker type="date" v-model="detail.startDate" placeholder="选择开始日期" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" v-model="detail.startDate" :picker-options="startDatePickerOptions" placeholder="选择开始日期" style="width: 100%;"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col class="line" :span="2">-</el-col>
           <el-col :span="11">
             <el-form-item prop="endDate">
-              <el-date-picker type="date" :picker-options="pickerOptions" v-model="detail.endDate" placeholder="选择结束日期" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" v-model="detail.endDate" :picker-options="endDatePickerOptions" placeholder="选择结束日期" style="width: 100%;"></el-date-picker>
             </el-form-item>
           </el-col>
         </el-form-item>
@@ -42,6 +42,7 @@
             :file-list="detail.files"
             :on-error="uploadError">
             <el-button size="small" type="text">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">文件不超过20mb</div>
           </el-upload>
         </el-form-item>
         <el-form-item label="需求说明" prop="detail">
@@ -76,9 +77,24 @@ export default {
         ]
       },
       // 限制结束时间大于开始时间
-      pickerOptions: {
+      endDatePickerOptions: {
         disabledDate: (time) => {
-          return time.getTime() < this.form.startDate.getTime()
+          const type = (typeof this.detail.startDate)
+          if (type === 'number') {
+            return time.getTime() < new Date(this.detail.startDate).getTime()
+          } else {
+            return time.getTime() < this.detail.startDate.getTime()
+          }
+        }
+      },
+      startDatePickerOptions: {
+        disabledDate: (time) => {
+          const type = (typeof this.detail.endDate)
+          if (type === 'number') {
+            return time.getTime() > new Date(this.detail.endDate).getTime()
+          } else {
+            return time.getTime() > this.detail.endDate.getTime()
+          }
         }
       }
     }
@@ -95,6 +111,8 @@ export default {
       this.detail.files = files
       this.$refs['projectForm'].validate((valid) => {
         if (valid) {
+          if (typeof this.detail.startDate !== 'number') this.detail.startDate = this.detail.startDate.getTime()
+          if (typeof this.detail.endDate !== 'number') this.detail.endDate = this.detail.endDate.getTime()
           this.$store.dispatch('project/update', this.detail).then(res => {
             this.$notify({
               title: '成功',
