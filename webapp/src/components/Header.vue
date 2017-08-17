@@ -8,11 +8,11 @@
       </div>
       <div class="nav">
         <el-menu theme="dark" class="el-menu-demo" mode="horizontal" :router="true" :default-active="active">
-          <el-menu-item index="/index">全部项目</el-menu-item>
-          <el-menu-item index="/process">进行中</el-menu-item>
-          <el-menu-item index="/finish">已完成</el-menu-item>
-          <el-menu-item v-if="role === 'USER'" index="/my">我的项目</el-menu-item>
-          <el-menu-item v-if="role === 'ADMIN'" index="/examine">待审核</el-menu-item>
+          <el-menu-item index="/index">全部项目<el-badge class="mark" :value="total.all" /></el-menu-item>
+          <el-menu-item index="/process">进行中<el-badge class="mark" :value="total.process" /></el-menu-item>
+          <el-menu-item index="/finish">已完成<el-badge class="mark" :value="total.finish" /></el-menu-item>
+          <el-menu-item v-if="role === 'USER'" index="/my">我的项目<el-badge class="mark" :value="total.my" /></el-menu-item>
+          <el-menu-item v-if="role === 'ADMIN'" index="/examine">待审核<el-badge class="mark" :value="total.examine" /></el-menu-item>
         </el-menu>
       </div>
       <div class="right">
@@ -31,12 +31,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   props: {
     showCreate: {
       type: Boolean,
       default: true
     }
+  },
+  computed: {
+    ...mapGetters({
+      total: 'project/total'
+    })
   },
   data () {
     return {
@@ -114,6 +120,9 @@ export default {
 .nav {
   float: left;
   margin-left: 50px;
+}
+.mark {
+ margin-top: -6px;
 }
 
 .right {

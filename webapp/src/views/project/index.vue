@@ -16,6 +16,7 @@ export default {
   },
   mounted () {
     this.$store.dispatch('project/getList')
+    this.$store.dispatch('project/getTotal')
   }
 }
 </script>

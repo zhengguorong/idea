@@ -28,8 +28,11 @@ const del = (id) => {
   return http.post('/api/project/delete', {id: id})
 }
 const changeState = (data) => {
-  return http.post(`/api/project/changeState`, data)
+  return http.post('/api/project/changeState', data)
+}
+const getTotal = () => {
+  return http.post('/api/project/getTotal')
 }
 export default {
-  getList, create, getMyList, getFinish, getActive, getDetail, update, del, changeState, getExamine
+  getList, create, getMyList, getFinish, getActive, getDetail, update, del, changeState, getExamine, getTotal
 }

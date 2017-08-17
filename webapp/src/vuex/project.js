@@ -8,7 +8,8 @@ export default {
     finishList: [],
     activeList: [],
     examineList: [],
-    detail: {}
+    detail: {},
+    total: {}
   },
   actions: {
     create ({commit}, data) {
@@ -48,12 +49,20 @@ export default {
       commit('update', data)
       return api.update(data)
     },
-    del ({commit}, id) {
-      return api.del(id)
+    del ({commit, dispatch}, id) {
+      return api.del(id).then(res => {
+        dispatch('getTotal')
+      })
     },
-    changeState ({commit}, data) {
+    changeState ({commit, dispatch}, data) {
       return api.changeState(data).then(res => {
         commit('changeState', data)
+        dispatch('getTotal')
+      })
+    },
+    getTotal ({commit}) {
+      return api.getTotal().then(res => {
+        commit('setTotal', res)
       })
     }
   },
@@ -66,6 +75,9 @@ export default {
     },
     isFetching (state) {
       return state.isFetching
+    },
+    total (state) {
+      return state.total
     }
   },
   mutations: {
@@ -96,6 +108,9 @@ export default {
           }
         }
       })
+    },
+    setTotal (state, data) {
+      state.total = data
     }
   }
 }

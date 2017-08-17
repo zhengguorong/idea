@@ -21,6 +21,7 @@ module.exports = app => {
   app.post('/api/project/getByUser', auth.isLogin, 'api.project.getByUser');
   app.post('/api/project/getByState', auth.isLogin, 'api.project.getByState');
   app.post('/api/project/getExcludeState', auth.isLogin, 'api.project.getExcludeState');
+  app.post('/api/project/getTotal', auth.isLogin, 'api.project.getTotal');
 
   app.post('/api/upload', 'api.upload');
 };

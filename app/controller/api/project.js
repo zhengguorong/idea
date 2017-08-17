@@ -59,6 +59,15 @@ module.exports = app => {
       yield this.app.model.project.findOneAndUpdate({ _id: id }, { state, state });
       this.ctx.status = 204;
     }
+    * getTotal() {
+      const userId = this.ctx.request.user.userId;
+      const all = yield this.app.model.project.find({}).count();
+      const process = yield this.app.model.project.find({ state: { '$ne': 'FINISH' } }).count();
+      const finish = yield this.app.model.project.find({ state: 'FINISH' }).count();
+      const my = yield this.app.model.project.find({ author: userId }).count();
+      const examine = yield this.app.model.project.find({ state: 'CREATE' }).count();
+      this.ctx.body = { all, process, finish, my, examine };
+    }
   }
   return ProjectController;
 };
