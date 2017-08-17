@@ -24,22 +24,18 @@
         <el-form-item label="开发时间" required>
           <el-col :span="11">
             <el-form-item prop="startDate">
-              <el-date-picker type="date" v-model="form.startDate" :picker-options="startDatePickerOptions" placeholder="选择开始日期" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" v-model="form.startDate" placeholder="选择开始日期" style="width: 100%;"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col class="line" :span="2">-</el-col>
           <el-col :span="11">
             <el-form-item prop="endDate">
-              <el-date-picker type="date" v-model="form.endDate" :picker-options="endDatePickerOptions" placeholder="选择结束日期" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" v-model="form.endDate" placeholder="选择结束日期" style="width: 100%;"></el-date-picker>
             </el-form-item>
           </el-col>
         </el-form-item>
         <el-form-item label="文件上传：">
-          <el-upload
-            ref="upload"
-            :action="uploadUrl"
-            :multiple="true"
-            :on-error="uploadError">
+          <el-upload ref="upload" :action="uploadUrl" :multiple="true" :on-error="uploadError">
             <el-button size="small" type="text">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">文件不超过20mb</div>
           </el-upload>
@@ -77,35 +73,11 @@ export default {
           { type: 'array', required: true, message: '请至少选择一个开发平台', trigger: 'change' }
         ],
         startDate: [
-            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         ],
         endDate: [
-            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         ]
-      },
-      // 限制结束时间大于开始时间
-      endDatePickerOptions: {
-        disabledDate: (time) => {
-          const type = (typeof this.form.startDate)
-          if (type === 'number') {
-            return time.getTime() < new Date(this.form.startDate).getTime()
-          } else {
-            return time.getTime() < this.form.startDate.getTime()
-          }
-        }
-      },
-      startDatePickerOptions: {
-        disabledDate: (time) => {
-          const type = (typeof this.form.endDate)
-          // 如果没选择结束时间不约束
-          if (!this.form.endDate) return false
-          // 由于选择时间后，时间类型会变成Date类型，因此要做判断
-          if (type === 'number') {
-            return time.getTime() > new Date(this.form.endDate).getTime()
-          } else {
-            return time.getTime() > this.form.endDate.getTime()
-          }
-        }
       }
     }
   },
@@ -119,8 +91,7 @@ export default {
       const files = this.getUploadFiles()
       this.form.files = files
       this.$refs['projectForm'].validate((valid) => {
-        if (valid) {
-          // 由于时间组件会绑定Date类型，因此转换为时间戳
+        if (valid && this.checkDate()) {
           this.form.startDate = this.form.startDate.getTime()
           this.form.endDate = this.form.endDate.getTime()
           this.$store.dispatch('project/create', this.form).then(res => {
@@ -133,6 +104,29 @@ export default {
           })
         }
       })
+    },
+    checkDate () {
+      if (this.form.startDate.getTime() < new Date().getTime() - 86400000) {
+        this.$message({
+          type: 'error',
+          message: '开始日期不能小于当天'
+        })
+        return false
+      } else if (this.form.endDate.getTime() < new Date().getTime() - 86400000) {
+        this.$message({
+          type: 'error',
+          message: '结束日期不能小于当天'
+        })
+        return false
+      } else if (this.form.endDate - this.form.startDate < 0) {
+        this.$message({
+          type: 'error',
+          message: '结束日期必须大于开始日期'
+        })
+        return false
+      } else {
+        return true
+      }
     },
     uploadError (err) {
       if (err.status === 413) {

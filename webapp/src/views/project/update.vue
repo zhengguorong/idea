@@ -24,13 +24,13 @@
         <el-form-item label="开发时间" required>
           <el-col :span="11">
             <el-form-item prop="startDate">
-              <el-date-picker type="date" v-model="detail.startDate" :picker-options="startDatePickerOptions" placeholder="选择开始日期" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" v-model="detail.startDate" placeholder="选择开始日期" style="width: 100%;"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col class="line" :span="2">-</el-col>
           <el-col :span="11">
             <el-form-item prop="endDate">
-              <el-date-picker type="date" v-model="detail.endDate" :picker-options="endDatePickerOptions" placeholder="选择结束日期" style="width: 100%;"></el-date-picker>
+              <el-date-picker type="date" v-model="detail.endDate" placeholder="选择结束日期" style="width: 100%;"></el-date-picker>
             </el-form-item>
           </el-col>
         </el-form-item>
@@ -75,27 +75,6 @@ export default {
         platform: [
           { type: 'array', required: true, message: '请至少选择一个开发平台', trigger: 'change' }
         ]
-      },
-      // 限制结束时间大于开始时间
-      endDatePickerOptions: {
-        disabledDate: (time) => {
-          const type = (typeof this.detail.startDate)
-          if (type === 'number') {
-            return time.getTime() < new Date(this.detail.startDate).getTime()
-          } else {
-            return time.getTime() < this.detail.startDate.getTime()
-          }
-        }
-      },
-      startDatePickerOptions: {
-        disabledDate: (time) => {
-          const type = (typeof this.detail.endDate)
-          if (type === 'number') {
-            return time.getTime() > new Date(this.detail.endDate).getTime()
-          } else {
-            return time.getTime() > this.detail.endDate.getTime()
-          }
-        }
       }
     }
   },
@@ -110,9 +89,9 @@ export default {
       const files = this.getUploadFiles()
       this.detail.files = files
       this.$refs['projectForm'].validate((valid) => {
-        if (valid) {
-          if (typeof this.detail.startDate !== 'number') this.detail.startDate = this.detail.startDate.getTime()
-          if (typeof this.detail.endDate !== 'number') this.detail.endDate = this.detail.endDate.getTime()
+        if (valid && this.checkDate()) {
+          this.detail.startDate = this.detail.startDate.getTime()
+          this.detail.endDate = this.detail.endDate.getTime()
           this.$store.dispatch('project/update', this.detail).then(res => {
             this.$notify({
               title: '成功',
@@ -123,6 +102,29 @@ export default {
           })
         }
       })
+    },
+    checkDate () {
+      if (this.detail.startDate.getTime() < new Date().getTime() - 86400000) {
+        this.$message({
+          type: 'error',
+          message: '开始日期不能小于当天'
+        })
+        return false
+      } else if (this.detail.endDate.getTime() < new Date().getTime() - 86400000) {
+        this.$message({
+          type: 'error',
+          message: '结束日期不能小于当天'
+        })
+        return false
+      } else if (this.detail.endDate - this.detail.startDate < 0) {
+        this.$message({
+          type: 'error',
+          message: '结束日期必须大于开始日期'
+        })
+        return false
+      } else {
+        return true
+      }
     },
     uploadError (err) {
       if (err.status === 413) {

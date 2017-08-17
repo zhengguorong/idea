@@ -73,6 +73,8 @@ export default {
       state.list = list
     },
     setDetail (state, detail) {
+      detail.startDate = new Date(detail.startDate)
+      detail.endDate = new Date(detail.endDate)
       state.detail = detail
     },
     changeState (state, data) {
