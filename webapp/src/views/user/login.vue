@@ -27,8 +27,14 @@
 
 <script>
   export default {
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        vm.routerFrom = from
+      })
+    },
     data () {
       return {
+        routerFrom: {},
         loginForm: {
           userId: '',
           password: ''
@@ -55,7 +61,11 @@
         this.$refs.loginForm.validate((valid) => {
           if (valid) {
             this.$store.dispatch('user/login', {userId: this.loginForm.userId, password: this.loginForm.password}).then(res => {
-              this.$router.back()
+              if (this.routerFrom.name) {
+                this.$router.back()
+              } else {
+                this.$router.push('/')
+              }
             }).catch(e => {
               this.$message.error(e.response.data)
             })
