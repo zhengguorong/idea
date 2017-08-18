@@ -30,7 +30,7 @@
           <span class="value">{{item.detail}}</span>
         </div>
 
-        <div class="row" v-if="item.files.length > 0">
+        <div class="row" v-if="item.files&&item.files.length > 0">
           <span class="label">附件：</span>
           <span class="value">
             <template v-for="file in item.files">
@@ -98,7 +98,7 @@ export default {
     },
     nameFormat (arr) {
       let result = ''
-      arr.forEach((item) => {
+      arr && arr.forEach((item) => {
         result = result + item.nickName + '、'
       })
       result = result.substring(0, result.length - 1)
@@ -106,7 +106,7 @@ export default {
     },
     platformFormat (arr) {
       let result = ''
-      arr.forEach((item) => {
+      arr && arr.forEach((item) => {
         result = result + item + '、'
       })
       result = result.substring(0, result.length - 1)

@@ -14,10 +14,14 @@ module.exports = app => {
       this.ctx.request.body.author = userId;
       this.ctx.validate(rule);
       const body = this.ctx.request.body;
-      yield this.app.model.project.create(body);
+      const project = yield this.app.model.project.create(body);
+      body._id = project._id;
       // 发送邀请邮件
       yield this.ctx.service.mail.sendInvitation(body);
       // 发送审核邮件
+      const adminUsers = yield this.ctx.service.user.getAdminUser();
+      body.examiner = adminUsers;
+      yield this.ctx.service.mail.sendExamine(body);
       this.ctx.status = 201;
     }
     * destroy() {
@@ -27,7 +31,12 @@ module.exports = app => {
     }
     * update() {
       const body = this.ctx.request.body;
+      // 对比开发者是否有新增，如果新增，发送邀请邮件
+      const project = yield this.app.model.project.findOne({ _id: body._id });
+      const diffDeveloper = yield this.ctx.service.project.getDiffDeveloper(project.developer, body.developer);
       yield this.app.model.project.findOneAndUpdate({ _id: body._id }, body);
+      body.developer = diffDeveloper;
+      yield this.ctx.service.mail.sendInvitation(body);
       this.ctx.status = 204;
     }
     * show() {

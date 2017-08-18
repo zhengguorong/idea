@@ -62,6 +62,11 @@ module.exports = app => {
       const user = yield app.model.user.findOneAndUpdate({ userId }, { password });
       return user;
     }
+    // 获取管理员
+    * getAdminUser() {
+      const users = yield app.model.user.find({ role: 'ADMIN' });
+      return users;
+    }
   }
   return UserService;
 };

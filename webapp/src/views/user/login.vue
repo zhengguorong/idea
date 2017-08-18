@@ -55,7 +55,7 @@
         this.$refs.loginForm.validate((valid) => {
           if (valid) {
             this.$store.dispatch('user/login', {userId: this.loginForm.userId, password: this.loginForm.password}).then(res => {
-              this.$router.push('/')
+              this.$router.back()
             }).catch(e => {
               this.$message.error(e.response.data)
             })

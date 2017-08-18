@@ -56,14 +56,14 @@ export default {
       this.$router.push('/')
     },
     createProject () {
-      this.$router.push('createProject')
+      this.$router.push('/createProject')
     },
     logout () {
       this.$router.push('login')
       window.localStorage.setItem('token', '')
     },
     userInfo () {
-      this.$router.push('userInfo')
+      this.$router.push('/userInfo')
     }
   },
   mounted () {
