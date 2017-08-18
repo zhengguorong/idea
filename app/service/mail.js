@@ -4,22 +4,23 @@ const moment = require('moment');
 
 module.exports = app => {
   const transporter = nodemailer.createTransport({
-    host: app.config.mail.host,
-    port: app.config.mail.port,
-    secure: false,
+    service: 'qq',
+    // host: app.config.mail.host,
+    // port: app.config.mail.port,
+    // secure: false,
     auth: {
       user: app.config.mail.auth.user,
       pass: app.config.mail.auth.pass,
     },
-    tls: {
-      rejectUnauthorized: false,
-    },
+    // tls: {
+      // rejectUnauthorized: false,
+    // },
   });
   class MailService extends app.Service {
     // 发送邮件
     * send(to, subject, text, html) {
       const mailOptions = {
-        from: app.config.mail.auth.user, to, subject, text, html,
+        from: `chaos实验室<${app.config.mail.auth.user}>`, to, subject, text, html,
       };
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {

@@ -19,8 +19,8 @@ module.exports = appInfo => {
     host: 'mail.bluemoon.com.cn',
     port: 25,
     auth: {
-      user: 'zhengguorong@bluemoon.com.cn',
-      pass: 'zgr1990721',
+      user: '380420472@qq.com',
+      pass: 'vmneqstnyzvfcahg',
     },
   };
   // should change to your own
