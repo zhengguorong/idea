@@ -12,8 +12,10 @@ export default {
     total: {}
   },
   actions: {
-    create ({commit}, data) {
-      api.create(data)
+    create ({commit, dispatch}, data) {
+      api.create(data).then(res => {
+        dispatch('getTotal')
+      })
     },
     getList ({commit}) {
       return api.getList().then(res => {

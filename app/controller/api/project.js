@@ -13,7 +13,11 @@ module.exports = app => {
       const userId = this.ctx.request.user.userId;
       this.ctx.request.body.author = userId;
       this.ctx.validate(rule);
-      yield this.app.model.project.create(this.ctx.request.body);
+      const body = this.ctx.request.body;
+      yield this.app.model.project.create(body);
+      // 发送邀请邮件
+      yield this.ctx.service.mail.sendInvitation(body);
+      // 发送审核邮件
       this.ctx.status = 201;
     }
     * destroy() {
@@ -32,19 +36,19 @@ module.exports = app => {
       this.ctx.body = result;
     }
     * index() {
-      this.ctx.body = yield this.app.model.project.find({}).sort({ '_id' : -1 });
+      this.ctx.body = yield this.app.model.project.find({}).sort({ _id: -1 });
     }
     * getByUser() {
       const userId = this.ctx.request.user.userId;
-      this.ctx.body = yield this.app.model.project.find({ author: userId }).sort({ '_id' : -1 });
+      this.ctx.body = yield this.app.model.project.find({ author: userId }).sort({ _id: -1 });
     }
     * getByState() {
       const state = this.ctx.request.body.state;
-      this.ctx.body = yield this.app.model.project.find({ state: state }).sort({ '_id' : -1 });
+      this.ctx.body = yield this.app.model.project.find({ state }).sort({ _id: -1 });
     }
     * getExcludeState() {
       const state = this.ctx.request.body.state;
-      this.ctx.body = yield this.app.model.project.find({ state: { '$ne': state } }).sort({ '_id' : -1 });
+      this.ctx.body = yield this.app.model.project.find({ state: { $ne: state } }).sort({ _id: -1 });
     }
     * changeState() {
       const id = this.ctx.request.body.id;
@@ -62,7 +66,7 @@ module.exports = app => {
     * getTotal() {
       const userId = this.ctx.request.user.userId;
       const all = yield this.app.model.project.find({}).count();
-      const process = yield this.app.model.project.find({ state: { '$ne': 'FINISH' } }).count();
+      const process = yield this.app.model.project.find({ state: { $ne: 'FINISH' } }).count();
       const finish = yield this.app.model.project.find({ state: 'FINISH' }).count();
       const my = yield this.app.model.project.find({ author: userId }).count();
       const examine = yield this.app.model.project.find({ state: 'CREATE' }).count();

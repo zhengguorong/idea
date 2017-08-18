@@ -14,6 +14,15 @@ module.exports = appInfo => {
       appSecret: '5yN0idaBoU21VEDvQDpoAnz9DtXZXwFT',
     },
   };
+  // 邮件发送通知
+  config.mail = {
+    host: 'mail.bluemoon.com.cn',
+    port: 25,
+    auth: {
+      user: 'zhengguorong@bluemoon.com.cn',
+      pass: 'zgr1990721',
+    },
+  };
   // should change to your own
   config.keys = appInfo.name + '_1492054139103_7031';
   config.jwtSecret = 'zhengguorong';
@@ -36,7 +45,7 @@ module.exports = appInfo => {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
-  config.middleware = ['errorHandler']; // 使用koa的中间件
+  config.middleware = [ 'errorHandler' ]; // 使用koa的中间件
   config.auth = {
     test: 'tst',
   };
@@ -45,7 +54,7 @@ module.exports = appInfo => {
   };
   config.static = {
     prefix: '/',
-    dir: [path.join(appInfo.baseDir, 'webapp/dist'), path.join(appInfo.baseDir, 'app/public')],
+    dir: [ path.join(appInfo.baseDir, 'webapp/dist'), path.join(appInfo.baseDir, 'app/public') ],
     dynamic: true,
     preload: false,
     buffer: false,
