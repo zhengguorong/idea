@@ -11,6 +11,7 @@
           <el-menu-item index="/index">全部项目<el-badge class="mark" :value="total.all" /></el-menu-item>
           <el-menu-item index="/process">进行中<el-badge class="mark" :value="total.process" /></el-menu-item>
           <el-menu-item index="/finish">已完成<el-badge class="mark" :value="total.finish" /></el-menu-item>
+          <el-menu-item v-if="role === 'USER'" index="/join">我参与的<el-badge class="mark" :value="total.join" /></el-menu-item>
           <el-menu-item v-if="role === 'USER'" index="/my">我的项目<el-badge class="mark" :value="total.my" /></el-menu-item>
           <el-menu-item v-if="role === 'ADMIN'" index="/examine">待审核<el-badge class="mark" :value="total.examine" /></el-menu-item>
         </el-menu>
@@ -59,7 +60,7 @@ export default {
       this.$router.push('/createProject')
     },
     logout () {
-      this.$router.push('login')
+      this.$router.push('/login')
       window.localStorage.setItem('token', '')
     },
     userInfo () {

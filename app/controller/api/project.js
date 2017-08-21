@@ -51,6 +51,10 @@ module.exports = app => {
       const userId = this.ctx.request.user.userId;
       this.ctx.body = yield this.app.model.project.find({ author: userId }).sort({ _id: -1 });
     }
+    * getMyJoinList() {
+      const userId = this.ctx.request.user.userId;
+      this.ctx.body = yield this.app.model.project.find({ 'developer.userId': userId }).sort({ _id: -1 });
+    }
     * getByState() {
       const state = this.ctx.request.body.state;
       this.ctx.body = yield this.app.model.project.find({ state }).sort({ _id: -1 });
@@ -79,7 +83,8 @@ module.exports = app => {
       const finish = yield this.app.model.project.find({ state: 'FINISH' }).count();
       const my = yield this.app.model.project.find({ author: userId }).count();
       const examine = yield this.app.model.project.find({ state: 'CREATE' }).count();
-      this.ctx.body = { all, process, finish, my, examine };
+      const join = yield this.app.model.project.find({ 'developer.userId': userId }).count();
+      this.ctx.body = { all, process, finish, my, examine, join };
     }
   }
   return ProjectController;

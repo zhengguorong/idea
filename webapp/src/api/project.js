@@ -15,6 +15,9 @@ const getActive = () => {
 const getList = () => {
   return http.post('/api/project')
 }
+const getMyJoinList = () => {
+  return http.post('/api/project/getMyJoinList')
+}
 const create = (data) => {
   return http.post('/api/project/create', data)
 }
@@ -34,5 +37,5 @@ const getTotal = () => {
   return http.post('/api/project/getTotal')
 }
 export default {
-  getList, create, getMyList, getFinish, getActive, getDetail, update, del, changeState, getExamine, getTotal
+  getList, create, getMyList, getFinish, getActive, getDetail, update, del, changeState, getExamine, getTotal, getMyJoinList
 }

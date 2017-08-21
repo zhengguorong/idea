@@ -17,6 +17,7 @@ module.exports = app => {
   app.post('/api/project/delete', auth.isLogin, 'api.project.destroy');
   app.post('/api/project/create', auth.isLogin, 'api.project.create');
   app.post('/api/project/getById', auth.isLogin, 'api.project.show');
+  app.post('/api/project/getMyJoinList', auth.isLogin, 'api.project.getMyJoinList');
   app.post('/api/project/changeState', auth.isLogin, 'api.project.changeState');
   app.post('/api/project/getByUser', auth.isLogin, 'api.project.getByUser');
   app.post('/api/project/getByState', auth.isLogin, 'api.project.getByState');

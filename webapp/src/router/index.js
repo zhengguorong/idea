@@ -28,6 +28,10 @@ export default [{
   name: 'my',
   component: require('@/views/project/my')
 }, {
+  path: '/join',
+  name: 'join',
+  component: require('@/views/project/join')
+}, {
   path: '/examine',
   name: 'examine',
   component: require('@/views/project/examine')

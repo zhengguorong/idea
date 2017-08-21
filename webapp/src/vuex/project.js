@@ -9,7 +9,8 @@ export default {
     activeList: [],
     examineList: [],
     detail: {},
-    total: {}
+    total: {},
+    join: [] // 参与的项目
   },
   actions: {
     create ({commit, dispatch}, data) {
@@ -24,6 +25,11 @@ export default {
     },
     getMyList ({commit}) {
       return api.getMyList().then(res => {
+        commit('setList', res)
+      })
+    },
+    getMyJoinList ({commit}) {
+      return api.getMyJoinList().then(res => {
         commit('setList', res)
       })
     },
