@@ -26,7 +26,7 @@
           <span class="value">{{dateFormat(item.endDate)}}</span>
         </div>
         <div class="row detail">
-          <span class="label">需求说明：</span>
+          <span class="label">应用价值：</span>
           <span class="value">{{item.detail}}</span>
         </div>
 

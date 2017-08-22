@@ -33,10 +33,17 @@ module.exports = app => {
       const body = this.ctx.request.body;
       // 对比开发者是否有新增，如果新增，发送邀请邮件
       const project = yield this.app.model.project.findOne({ _id: body._id });
-      const diffDeveloper = yield this.ctx.service.project.getDiffDeveloper(project.developer, body.developer);
       yield this.app.model.project.findOneAndUpdate({ _id: body._id }, body);
-      body.developer = diffDeveloper;
-      yield this.ctx.service.mail.sendInvitation(body);
+      if (body.developer) {
+        const diffDeveloper = yield this.ctx.service.project.getDiffDeveloper(project.developer, body.developer);
+        body.developer = diffDeveloper;
+        yield this.ctx.service.mail.sendInvitation(body);
+      }
+      this.ctx.status = 204;
+    }
+    * patch() {
+      const body = this.ctx.request.body;
+      yield this.app.model.project.findOneAndUpdate({ _id: body._id }, body);
       this.ctx.status = 204;
     }
     * show() {

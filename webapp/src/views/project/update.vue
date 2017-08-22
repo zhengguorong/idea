@@ -45,7 +45,7 @@
             <div slot="tip" class="el-upload__tip">文件不超过20mb</div>
           </el-upload>
         </el-form-item>
-        <el-form-item label="需求说明" prop="detail">
+        <el-form-item label="应用价值" prop="detail">
           <el-input :rows="5" type="textarea" v-model="detail.detail"></el-input>
         </el-form-item>
         <el-form-item>

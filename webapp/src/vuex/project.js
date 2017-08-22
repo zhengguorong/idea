@@ -57,6 +57,10 @@ export default {
       commit('update', data)
       return api.update(data)
     },
+    patch ({commit}, data) {
+      commit('update', data)
+      return api.patch(data)
+    },
     del ({commit, dispatch}, id) {
       return api.del(id).then(res => {
         dispatch('getTotal')

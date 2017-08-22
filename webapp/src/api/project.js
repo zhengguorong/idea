@@ -27,6 +27,9 @@ const getDetail = (id) => {
 const update = (data) => {
   return http.post('/api/project/update', data)
 }
+const patch = (data) => {
+  return http.post('/api/project/patch', data)
+}
 const del = (id) => {
   return http.post('/api/project/delete', {id: id})
 }
@@ -37,5 +40,5 @@ const getTotal = () => {
   return http.post('/api/project/getTotal')
 }
 export default {
-  getList, create, getMyList, getFinish, getActive, getDetail, update, del, changeState, getExamine, getTotal, getMyJoinList
+  getList, create, getMyList, getFinish, getActive, getDetail, update, patch, del, changeState, getExamine, getTotal, getMyJoinList
 }
