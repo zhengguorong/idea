@@ -25,6 +25,14 @@
           <span class="label">结束时间：</span>
           <span class="value">{{dateFormat(item.endDate)}}</span>
         </div>
+        <div class="row" v-if="item.hardRes">
+          <span class="label">硬件资源：</span>
+          <span class="value">{{item.hardRes}}</span>
+        </div>
+        <div class="row" v-if="item.devRes">
+          <span class="label">开发资源：</span>
+          <span class="value">{{item.devRes}}</span>
+        </div>
         <div class="row detail">
           <span class="label">应用价值：</span>
           <span class="value">{{item.detail}}</span>

@@ -13,6 +13,8 @@ module.exports = mongoose => {
     platform: { type: Array, required: true }, // 开发平台
     files: { type: Array }, // 附件
     examineMessage: { type: String }, // 审核信息
+    hardRes: { type: String }, // 硬件资源
+    devRes: { type: String }, // 开发资源
   });
   return mongoose.model('Project', ProjectSchema);
 };

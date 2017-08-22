@@ -45,6 +45,12 @@
             <div slot="tip" class="el-upload__tip">文件不超过20mb</div>
           </el-upload>
         </el-form-item>
+        <el-form-item label="硬件资源：" prop="hardRes">
+          <el-input v-model="detail.hardRes" placeholder="例如：一台双核8G服务器"></el-input>
+        </el-form-item>
+        <el-form-item label="开发资源：" prop="devRes">
+          <el-input v-model="detail.devRes" placeholder="例如：1名设计，1名前端开发，1名后端开发"></el-input>
+        </el-form-item>
         <el-form-item label="应用价值" prop="detail">
           <el-input :rows="5" type="textarea" v-model="detail.detail"></el-input>
         </el-form-item>
@@ -74,6 +80,12 @@ export default {
         ],
         platform: [
           { type: 'array', required: true, message: '请至少选择一个开发平台', trigger: 'change' }
+        ],
+        hardRes: [
+          { required: true, message: '硬件资源不可空' }
+        ],
+        devRes: [
+          { required: true, message: '开发资源不可空' }
         ]
       }
     }
