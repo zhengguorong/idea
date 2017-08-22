@@ -30,7 +30,7 @@ module.exports = app => {
       });
     }
     // 发送邀请邮件
-    * sendInvitation({ _id, developer, title, charge, platform, startDate, endDate, detail }) {
+    * sendInvitation({ _id, developer, title, charge, platform, startDate, endDate, detail, hardRes, devRes }) {
       const developerStr = this.developerObjectToString(developer);
       // 不知道为什么forEach不能用yield
       for (let i = 0; i < developer.length; i++) {
@@ -43,16 +43,18 @@ module.exports = app => {
           const platformHtml = `<p style="text-indent:2em">开发平台：${platform}</p>`;
           const startDateHtml = `<p style="text-indent:2em">开始时间：${moment(startDate).format('YYYY年MM月DD日')}</p>`;
           const endDateHtml = `<p style="text-indent:2em">结束时间：${moment(endDate).format('YYYY年MM月DD日')}</p>`;
-          const detailHtml = `<p style="text-indent:2em">需求说明：${detail}</p>`;
+          const hardResHtml = `<p style="text-indent:2em">硬件资源：${hardRes}</p>`;
+          const devResHtml = `<p style="text-indent:2em">开发资源：${devRes}</p>`;
+          const detailHtml = `<p style="text-indent:2em">应用价值：${detail}</p>`;
           const linkHtml = `<p style="text-indent:2em"><a href="${app.config.domain}/#/projectDetail/${_id}">点击查看详情</a></p>`;
           const footerHtml = '<div style="text-align:right">from： chaos实验室自动发送</div></div>';
-          const releaseHtml = style + headerHtml + chargeHtml + developerHtml + platformHtml + startDateHtml + endDateHtml + detailHtml + linkHtml + footerHtml;
+          const releaseHtml = style + headerHtml + chargeHtml + developerHtml + platformHtml + startDateHtml + endDateHtml + hardResHtml + devResHtml + detailHtml + linkHtml + footerHtml;
           yield this.send(item.email, 'chaos实验室系统通知', '', releaseHtml);
         }
       }
     }
    // 发送审核邮件
-    * sendExamine({ _id, developer, title, charge, platform, startDate, endDate, detail, examiner }) {
+    * sendExamine({ _id, developer, title, charge, platform, startDate, endDate, detail, hardRes, devRes, examiner }) {
       const developerStr = this.developerObjectToString(developer);
       // 不知道为什么forEach不能用yield
       for (let i = 0; i < examiner.length; i++) {
@@ -65,10 +67,12 @@ module.exports = app => {
           const platformHtml = `<p style="text-indent:2em">开发平台：${platform}</p>`;
           const startDateHtml = `<p style="text-indent:2em">开始时间：${moment(startDate).format('YYYY年MM月DD日')}</p>`;
           const endDateHtml = `<p style="text-indent:2em">结束时间：${moment(endDate).format('YYYY年MM月DD日')}</p>`;
-          const detailHtml = `<p style="text-indent:2em">需求说明：${detail}</p>`;
+          const hardResHtml = `<p style="text-indent:2em">硬件资源：${hardRes}</p>`;
+          const devResHtml = `<p style="text-indent:2em">开发资源：${devRes}</p>`;
+          const detailHtml = `<p style="text-indent:2em">应用价值：${detail}</p>`;
           const linkHtml = `<p style="text-indent:2em"><a href="${app.config.domain}/#/projectDetail/${_id}">点击查看详情</a></p>`;
           const footerHtml = '<div style="text-align:right">from： chaos实验室自动发送</div></div>';
-          const releaseHtml = style + headerHtml + chargeHtml + developerHtml + platformHtml + startDateHtml + endDateHtml + detailHtml + linkHtml + footerHtml;
+          const releaseHtml = style + headerHtml + chargeHtml + developerHtml + platformHtml + startDateHtml + endDateHtml + hardResHtml + devResHtml + detailHtml + linkHtml + footerHtml;
           yield this.send(item.email, 'chaos实验室系统通知', '', releaseHtml);
         }
       }
