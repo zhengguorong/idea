@@ -39,6 +39,12 @@ const changeState = (data) => {
 const getTotal = () => {
   return http.post('/api/project/getTotal')
 }
+const getSearchSuggest = () => {
+  return http.post('/api/project/getSearchSuggest')
+}
+const search = (keyword) => {
+  return http.post('/api/project/search', {keyword: keyword})
+}
 export default {
-  getList, create, getMyList, getFinish, getActive, getDetail, update, patch, del, changeState, getExamine, getTotal, getMyJoinList
+  getList, create, getMyList, getFinish, getActive, getDetail, update, patch, del, changeState, getExamine, getTotal, getMyJoinList, getSearchSuggest, search
 }

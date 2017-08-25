@@ -93,6 +93,13 @@ module.exports = app => {
       const join = yield this.app.model.project.find({ 'developer.userId': userId }).count();
       this.ctx.body = { all, process, finish, my, examine, join };
     }
+    * getSearchSuggest() {
+      this.ctx.body = yield this.app.model.project.aggregate({ $project: { value: '$title' } });
+    }
+    * search() {
+      const keyword = this.ctx.request.body.keyword;
+      this.ctx.body = yield this.app.model.project.find({ $or: [{ title: new RegExp(keyword) }, { charge: new RegExp(keyword) }] });
+    }
   }
   return ProjectController;
 };

@@ -24,6 +24,8 @@ module.exports = app => {
   app.post('/api/project/getByState', auth.isLogin, 'api.project.getByState');
   app.post('/api/project/getExcludeState', auth.isLogin, 'api.project.getExcludeState');
   app.post('/api/project/getTotal', auth.isLogin, 'api.project.getTotal');
+  app.post('/api/project/getSearchSuggest', auth.isLogin, 'api.project.getSearchSuggest');
+  app.post('/api/project/search', auth.isLogin, 'api.project.search');
 
   app.post('/api/upload', 'api.upload');
 };

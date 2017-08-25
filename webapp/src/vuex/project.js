@@ -10,7 +10,8 @@ export default {
     examineList: [],
     detail: {},
     total: {},
-    join: [] // 参与的项目
+    join: [], // 参与的项目
+    searchSuggest: [] // 搜索建议
   },
   actions: {
     create ({commit, dispatch}, data) {
@@ -76,6 +77,16 @@ export default {
       return api.getTotal().then(res => {
         commit('setTotal', res)
       })
+    },
+    getSearchSuggest ({commit}) {
+      return api.getSearchSuggest().then(res => {
+        commit('setSearchSuggest', res)
+      })
+    },
+    search ({commit}, keyword) {
+      return api.search(keyword).then(res => {
+        commit('setList', res)
+      })
     }
   },
   getters: {
@@ -90,6 +101,9 @@ export default {
     },
     total (state) {
       return state.total
+    },
+    searchSuggest (state) {
+      return state.searchSuggest
     }
   },
   mutations: {
@@ -123,6 +137,9 @@ export default {
     },
     setTotal (state, data) {
       state.total = data
+    },
+    setSearchSuggest (state, data) {
+      state.searchSuggest = data
     }
   }
 }

@@ -16,9 +16,18 @@ export default {
   components: {
     List
   },
+  // 解决相同路由，参数不同无法触发mounted方法的问题
+  watch: {
+    '$route': ['getDetail']
+  },
+  methods: {
+    getDetail () {
+      const projectId = this.$route.params.id
+      this.$store.dispatch('project/getDetial', projectId)
+    }
+  },
   mounted () {
-    const projectId = this.$route.params.id
-    this.$store.dispatch('project/getDetial', projectId)
+    this.getDetail()
   }
 }
 </script>
