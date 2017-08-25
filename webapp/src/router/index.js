@@ -32,6 +32,10 @@ export default [{
   name: 'join',
   component: require('@/views/project/join')
 }, {
+  path: '/search/:keyword',
+  name: 'search',
+  component: require('@/views/project/search')
+}, {
   path: '/examine',
   name: 'examine',
   component: require('@/views/project/examine')

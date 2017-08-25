@@ -93,7 +93,9 @@ export default {
     },
     // 输入关键字后点击搜索
     search () {
-      this.$store.dispatch('project/search', this.searchKeyWord)
+      if (this.searchKeyWord) {
+        this.$router.push('/search/' + this.searchKeyWord)
+      }
     },
     // 选择搜索建议
     searchSelect (item) {
