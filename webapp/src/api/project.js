@@ -12,8 +12,8 @@ const getExamine = () => {
 const getActive = () => {
   return http.post('/api/project/getExcludeState', {state: 'FINISH'})
 }
-const getList = () => {
-  return http.post('/api/project')
+const getList = ({page, limit}) => {
+  return http.post('/api/project', {page, limit})
 }
 const getMyJoinList = () => {
   return http.post('/api/project/getMyJoinList')

@@ -52,7 +52,16 @@ module.exports = app => {
       this.ctx.body = result;
     }
     * index() {
-      this.ctx.body = yield this.app.model.project.find({}).sort({ _id: -1 });
+      const page = this.ctx.request.body.page || 1;
+      const limit = this.ctx.request.body.limit || 5;
+      const skip = (page - 1) * limit;
+      const count = yield this.app.model.project.find({}).count();
+      const pageCount = Math.ceil(count / limit);
+      const list = yield this.app.model.project.find({})
+      .sort({ _id: -1 })
+      .limit(limit)
+      .skip(skip);
+      this.ctx.body = { pageCount, list };
     }
     * getByUser() {
       const userId = this.ctx.request.user.userId;

@@ -19,9 +19,14 @@ export default {
         dispatch('getTotal')
       })
     },
-    getList ({commit}) {
-      return api.getList().then(res => {
-        commit('setList', res)
+    getList ({commit}, {page, limit}) {
+      return api.getList({page, limit}).then(res => {
+        if (page <= 1) {
+          commit('setList', res.list)
+        } else {
+          commit('setListMore', res.list)
+        }
+        return res
       })
     },
     getMyList ({commit}) {
@@ -109,6 +114,9 @@ export default {
   mutations: {
     setList (state, list) {
       state.list = list
+    },
+    setListMore (state, list) {
+      state.list = state.list.concat(list)
     },
     setDetail (state, detail) {
       detail.startDate = new Date(detail.startDate)
